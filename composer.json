@@ -23,12 +23,12 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"Lexa7979\\TimetableBundle\\": "src/"
+			"Cepharum\\TimetableBundle\\": "src/"
 		}
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"Lexa7979\\TimetableBundle\\Test\\": "tests/"
+			"Cepharum\\TimetableBundle\\Test\\": "tests/"
 		}
 	},
 	"extra": {
@@ -43,6 +43,6 @@
 				"languages_tx": ".tx"
 			}
 		},
-		"contao-manager-plugin": "Lexa7979\\TimetableBundle\\ContaoManager\\Plugin"
+		"contao-manager-plugin": "Cepharum\\TimetableBundle\\ContaoManager\\Plugin"
 	}
 }
