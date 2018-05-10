@@ -1,6 +1,6 @@
 <?php
 
-namespace Cepharum\TimetableBundle\ContaoManager;
+namespace Lexa7979\TimetableBundle\ContaoManager;
 
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\BundlePluginInterface;

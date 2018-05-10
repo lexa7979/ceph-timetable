@@ -1,6 +1,6 @@
 <?php
 
-namespace Cepharum\TimetableBundle;
+namespace Lexa7979\TimetableBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

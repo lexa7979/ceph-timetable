@@ -8,7 +8,7 @@ class Configuration implements ConfigurationInterface
 	public function getConfigTreeBuilder()
 	{
 		$treeBuilder = new TreeBuilder();
-		$rootNode = $treeBuilder->root('cepharum-timetable');
+		$rootNode = $treeBuilder->root('ceph-timetable');
 
 		return $treeBuilder;
 	}
