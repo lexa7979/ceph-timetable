@@ -1,0 +1,56 @@
+{
+	"name": "lexa7979/ceph-timetable",
+	"description": "Contao bundle",
+	"keywords": ["contao","bundle"],
+	"type": "contao-bundle",
+	"homepage": "https://cepharum.de",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Alexander Urban",
+			"homepage": "https://cepharum.de",
+			"role": "Developer"
+		}
+	],
+	"support":{
+		"issues":"https://github.com/lexa7979/ceph-timetable/issues",
+		"source":"https://github.com/lexa7979/ceph-timetable"
+	},
+	"require":{
+		"php":">=7.0",
+		"contao/core-bundle":"~4.4"
+	},
+	"autoload":{
+		"psr-4": {
+			"Cepharum\\TimetableBundle\\": "src/"
+		},
+		"classmap": [
+			"src/Resources/contao/"
+		],
+		"exclude-from-classmap": [
+			"src/Resources/contao/config/",
+			"src/Resources/contao/dca/",
+			"src/Resources/contao/languages/",
+			"src/Resources/contao/templates/"
+		]
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Cepharum\\TimetableBundle\\Test\\": "tests/"
+		}
+	},
+	"extra": {
+		"branch-alias": {
+			"dev-develop": "1.1.x-dev"
+		},
+		"contao": {
+			"transifex": {
+				"project": "ceph-timetable",
+				"prefix": "master-",
+				"languages_cto": "src/Resources/contao/languages",
+				"languages_tx": ".tx"
+			}
+		},
+		"contao-manager-plugin": "Cepharum\\TimetableBundle\\ContaoManager\\Plugin"
+	}
+}
