@@ -1,6 +1,6 @@
 <?php
 
-namespace Lexa7979\TimetableBundle\ContaoManager;
+namespace Cepharum\TimetableBundle\ContaoManager;
 
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
@@ -11,11 +11,12 @@ class Plugin implements BundlePluginInterface
     public function getBundles(ParserInterface $parser)
     {
         return [
-            BundleConfig::create(TimetableBundle::class)
+            BundleConfig::create('Cepharum\TimetableBundle\CepharumTimetableBundle')
                 ->setLoadAfter([
 					'Contao\CoreBundle\ContaoCoreBundle',
 					'Contao\ManagerBundle\ContaoManagerBundle'
 				])
+				->setReplace(['ceph-timetable'])
         ];
     }
 }
