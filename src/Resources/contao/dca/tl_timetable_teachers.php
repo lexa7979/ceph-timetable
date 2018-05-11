@@ -2,7 +2,7 @@
 
 // Reference: https://docs.contao.org/books/api/dca/reference.html
 
-$GLOBALS['TL_DCA']['tl_timetable_people'] = [
+$GLOBALS['TL_DCA']['tl_timetable_teachers'] = [
 
 	// Table configuration:
 	'config'	=> [
@@ -28,28 +28,28 @@ $GLOBALS['TL_DCA']['tl_timetable_people'] = [
 		],
 		'operations'=> [
 			'edit'		=> [
-				'label'		=> &$GLOBALS['TL_LANG']['tl_timetable_people']['edit'],
-				'href'		=> 'table=tl_timetable_people',
+				'label'		=> &$GLOBALS['TL_LANG']['tl_timetable_teachers']['edit'],
+				'href'		=> 'table=tl_timetable_teachers',
 				'icon'		=> 'edit.gif'
 			],
 			'editheader'=> [
-				'label'		=> &$GLOBALS['TL_LANG']['tl_timetable_people']['editheader'],
+				'label'		=> &$GLOBALS['TL_LANG']['tl_timetable_teachers']['editheader'],
 				'href'		=> 'act=edit',
 				'icon'		=> 'header.gif',
 			],
 			'copy'		=> [
-				'label'		=> &$GLOBALS['TL_LANG']['tl_timetable_people']['copy'],
+				'label'		=> &$GLOBALS['TL_LANG']['tl_timetable_teachers']['copy'],
 				'href'		=> 'act=copy',
 				'icon'		=> 'copy.gif',
 			],
 			'delete'	=> [
-				'label'		=> &$GLOBALS['TL_LANG']['tl_timetable_people']['delete'],
+				'label'		=> &$GLOBALS['TL_LANG']['tl_timetable_teachers']['delete'],
 				'href'		=> 'act=delete',
 				'icon'		=> 'delete.gif',
 				'attributes'=> 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\'))return false;Backend.getScrollOffset()"',
 			],
 			'show'		=> [
-				'label'		=> &$GLOBALS['TL_LANG']['tl_timetable_people']['show'],
+				'label'		=> &$GLOBALS['TL_LANG']['tl_timetable_teachers']['show'],
 				'href'		=> 'act=show',
 				'icon'		=> 'show.gif'
 			]
@@ -64,7 +64,7 @@ $GLOBALS['TL_DCA']['tl_timetable_people'] = [
 			'sql'			=> "int(10) unsigned NOT NULL default '0'"
 		],
 		'name'		=> [
-			'label'			=> &$GLOBALS['TL_LANG']['tl_timetable_people']['name'],
+			'label'			=> &$GLOBALS['TL_LANG']['tl_timetable_teachers']['name'],
 			'exclude'		=> true,
 			'search'		=> true,
 			'sorting'		=> true,
