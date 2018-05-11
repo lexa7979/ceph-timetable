@@ -1,10 +1,8 @@
 <?php
 
-// Reference: https://docs.contao.org/books/api/dca/reference.html
-
 $GLOBALS['TL_DCA']['tl_timetable_sites'] = [
 
-	// Table configuration:
+	// General options:
 	'config'	=> [
 		'dataContainer'		=> 'Table',
 		'ctable'			=> ['tl_timetable_rooms'],
@@ -12,7 +10,7 @@ $GLOBALS['TL_DCA']['tl_timetable_sites'] = [
 		'sql'				=> ['keys' => ['id' => 'primary']]
 	],
 
-	// Listing records:
+	// Structure of record list:
 	'list'		=> [
 		'sorting'	=> [
 			'mode'			=> 1,		// "Records are sorted by a fixed field"
@@ -60,6 +58,12 @@ $GLOBALS['TL_DCA']['tl_timetable_sites'] = [
 	'fields'	=> [
 		'id'		=> [
 			'sql'			=> "int(10) unsigned NOT NULL auto_increment"
+		],
+		'sorting'	=> [
+			'label'			=> &$GLOBALS['TL_LANG']['MSC']['sorting'],
+			'sorting'		=> true,
+			'flag'			=> 11,
+			'sql'			=> "int(10) unsigned NOT NULL default '0'",
 		],
 		'tstamp'	=> [
 			'sql'			=> "int(10) unsigned NOT NULL default '0'"

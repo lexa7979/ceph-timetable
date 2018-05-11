@@ -1,10 +1,8 @@
 <?php
 
-// Reference: https://docs.contao.org/books/api/dca/reference.html
-
 $GLOBALS['TL_DCA']['tl_timetable_rooms'] = [
 
-	// Table configuration:
+	// General options:
 	'config' 	=> [
 		'dataContainer'		=> 'Table',
 		'ptable'			=> 'tl_timetable_sites',
@@ -13,10 +11,10 @@ $GLOBALS['TL_DCA']['tl_timetable_rooms'] = [
 		'sql'				=> ['keys' => ['id' => 'primary']],
 	],
 
-	// Listing records:
+	// Structure of record list:
 	'list'		=> [
 		'sorting'	=> [
-			'mode'			=> 4,
+			'mode'			=> 4,		// "Displays the child records of a parent record (see style sheets module)"
 			'flag'			=> 1,
 			'fields'		=> ['sorting'],
 			'panelLayout'	=> 'debug;filter;sort,search,limit',
@@ -59,6 +57,13 @@ $GLOBALS['TL_DCA']['tl_timetable_rooms'] = [
 		]
 	],
 
+	// Strucutre of input form:
+	'palettes' 	=> [
+		'__selector__'		=> [],
+		'default'			=> '{description},roomnumber',
+	],
+	
+	// Structure inside database:
 	'fields' 	=> [
 		'id'		=> [
 			'sql'			=> "int(10) unsigned NOT NULL auto_increment",
@@ -87,10 +92,5 @@ $GLOBALS['TL_DCA']['tl_timetable_rooms'] = [
 			'eval'			=> ['mandatory' => true, 'maxlength' => 255],
 			'sql'			=> "varchar(255) NOT NULL default ''",
 		],
-	],
-
-	'palettes' 	=> [
-		'__selector__'		=> [],
-		'default'			=> 'roomnumber',
 	],
 ];

@@ -6,3 +6,19 @@ Initial setup taken from:
 
 composer install --optimize-autoloader
 
+#########################################
+
+DCA-Array - $GLOBALS['TL_DCA'][<Tabellenname>]
+
+	'config'						=> 
+	'list'	=> 'sorting'			=> 
+	'list'	=> 'label'				=> 
+	'list'	=> 'global_operations'	=> 
+	'list'	=> 'operations'			=> 
+	'palettes'						=> 
+	'subpalettes'					=> 
+	'fields'						=> Beschreibung der Tabellenstruktur (SQL-Design, Pflichtfelder)
+
+ - https://docs.contao.org/books/api/dca/reference.html
+ - https://docs.contao.org/books/api/dca/palettes.html
+
