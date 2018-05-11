@@ -9,7 +9,7 @@
  */
 $GLOBALS['BE_MOD']['content']['sites'] = array
 (
-	'tables' => array('tl_sites'),
+	'tables' => array('tl_timetable_sites'),
 	'icon'   => 'bundles/cepharumtimetable/home.gif'
 );
 
