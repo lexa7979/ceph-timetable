@@ -1,11 +1,11 @@
 <?php
 
-class ModuleTimetableView extends Module {
+class ModuleTimetable extends Module {
 
     /**
      * @var string
      */
-    protected $strTemplate = 'mod_timetable_view';
+    protected $strTemplate = 'mod_timetable';
 
     /**
      * Do not display the module if there are no menu items

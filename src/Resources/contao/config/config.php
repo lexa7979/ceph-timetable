@@ -4,10 +4,10 @@
 
 // Add back end modules
 array_insert($GLOBALS['BE_MOD'], 1, [
-	'CepharumTimetable' => [
-		'Sites and rooms'	=> ['tables' => ['tl_timetable_sites', 'tl_timetable_rooms'],	'icon' => 'home.gif'],
-		'Teachers'			=> ['tables' => ['tl_timetable_teachers'],						'icon' => 'home.gif'],
-		'Dancestyles'		=> ['tables' => ['tl_timetable_styles'],						'icon' => 'home.gif'],
+	'timetable' => [
+		'rooms'		=> ['tables' => ['tl_timetable_sites', 'tl_timetable_rooms'],	'icon' => 'home.gif'],
+		'teachers'	=> ['tables' => ['tl_timetable_teachers'],						'icon' => 'home.gif'],
+		'styles'	=> ['tables' => ['tl_timetable_styles'],						'icon' => 'home.gif'],
 	]
 ]);
 
