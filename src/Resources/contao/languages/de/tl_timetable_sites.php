@@ -1,7 +1,6 @@
 <?php
 
 $new_items = [
-	'title'			=> ['Gebäude', 'Gebäude'],
 	'new'			=> ['Neues Gebäude', 'Neues Gebäude registrieren'],
 	'edit'			=> ['Gebäudedaten ändern', 'Daten des Gebäudes mit ID %s ändern'],
 	'editheader'	=> ['XXGebäudedaten ändern', 'XXDaten des Gebäudes mit ID %s ändern'],
@@ -11,7 +10,6 @@ $new_items = [
 	'title_legend'	=> ['Gebäudedaten', 'Gebäudedaten'],
 	'name'			=> ['Gebäudename', 'Welchen Namen hat das Gebäude?'],
 ];
-
 foreach ($new_items as $key => $value) $GLOBALS['TL_LANG']['tl_timetable_sites'][$key] = $value;
 
 // $GLOBALS['TL_LANG']['tl_timetable_sites']['copy']['0']       = 'Profil duplizieren';
