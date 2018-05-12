@@ -122,7 +122,8 @@ $GLOBALS['TL_DCA']['tl_timetable'] = [
 			// 'fields'		=> ['weekday', 'time', 'room:tl_timetable_rooms.roomnumber', 'teacher:tl_timetable_teachers.name', 'style:tl_timetable_styles.name', 'description', 'ages'],
 			// 'format'		=> '%s',
 			'showColumns'	=> false,
-			'label_callback'=> ['Cepharum\TimetableBundle\TimetableBackend', 'listCourses'],
+			'label_callback'=> ['TimetableBackend', 'listCourses'],
+			// 'label_callback'=> ['Cepharum\Timetable\TimetableBackend', 'listCourses'],
 		],
 		'global_operations'=> [
 		],
@@ -157,3 +158,23 @@ $GLOBALS['TL_DCA']['tl_timetable'] = [
 		'default'			=> '{title_legend},weekday,time,room,teacher,style,description,ages,is_forbeginners,is_fullybooked',
 	],
 ];
+
+/**
+ * Provide miscellaneous methods that are used by the data configuration array.
+ */
+class TimetableBackend extends Backend {
+
+	public function listCourses($arrRow) {
+		$s = [
+			0 => $GLOBALS['TL_LANG']['tl_timetable']['time'][0],
+			1 => substr($arrRow['time'], 0, 5),
+		];
+		return <<<EOT
+<div>$s[1]</div>
+EOT;
+		// $s = "";
+		// foreach ($arrRow as $key => $value) if (is_string($value))
+		// 	$s .= "<div>$key: $value</div>";
+		// return $s;
+	}
+}

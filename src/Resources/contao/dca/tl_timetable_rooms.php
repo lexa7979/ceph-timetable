@@ -49,7 +49,8 @@ $GLOBALS['TL_DCA']['tl_timetable_rooms'] = [
 			'fields'		=> ['sorting'],
 			'panelLayout'	=> 'filter;sort,search,limit',
 			'headerFields'	=> ['id', 'name', 'tstamp'],
-			'child_record_callback'	=> ['Cepharum\TimetableBundle\TimetableRoomsBackend', 'listRooms']
+			'child_record_callback'	=> ['TimetableRoomsBackend', 'listRooms']
+			// 'child_record_callback'	=> ['Cepharum\Timetable\TimetableRoomsBackend', 'listRooms']
 		],
 		'label' 	=> [
 			'fields'		=> ['roomnumber'],
@@ -89,3 +90,19 @@ $GLOBALS['TL_DCA']['tl_timetable_rooms'] = [
 		'default'			=> '{title_legend},roomnumber',
 	],
 ];
+
+/**
+ * Provide miscellaneous methods that are used by the data configuration array.
+ */
+class TimetableRoomsBackend extends Backend {
+
+	public function listRooms($arrRow) {
+		$s = [
+			0 => !Config::get('doNotCollapse') ? ' h40' : '',
+			1 => $arrRow['roomnumber']
+		];
+		return <<<EOT
+<div class="limit_height$s[0]"><h2>$s[1]</h2></div>
+EOT;
+	}
+}
