@@ -1,12 +1,11 @@
 <?php
 
-//$GLOBALS[?TL_HOOKS?][?processFormData?][] =[?mybundle.listener.process_form_data?, ?onProcessFormData?];
+//$GLOBALS['TL_HOOKS']['processFormData'][] =['mybundle.listener.process_form_data', 'onProcessFormData'];
 
 /**
- * Add back end modules
+ * Add back end modules:
  */
-
-array_insert($GLOBALS['BE_MOD'], 0, [
+array_insert($GLOBALS['BE_MOD'], 1, [
 	'CepharumTimetable' => [
 		'Sites and rooms' => [
 			'tables' 	=> ['tl_timetable_sites', 'tl_timetable_rooms'],
@@ -23,57 +22,9 @@ array_insert($GLOBALS['BE_MOD'], 0, [
 	]
 ]);
 
-// array_insert($GLOBALS['BE_MOD']['CepharumTimetable'], 1, [
-// 	'Sites and rooms' => [
-// 		'tables' 	=> ['tl_timetable_sites', 'tl_timetable_rooms'],
-// 		'icon'   	=> 'home.gif',
-// 	],
-// 	'Teachers' => [
-// 		'tables'	=> ['tl_timetable_teachers'],
-// 		'icon'		=> 'home.gif',
-// 	],
-// 	'Dancestyles'	=> [
-// 		'tables'	=> ['tl_timetable_styles'],
-// 		'icon'		=> 'home.gif',
-// 	],
-// ]);
-
-//  $GLOBALS['BE_MOD']['timetable'] = [
-// 	'sites'		=> [
-// 		'tables' 	=> ['tl_timetable_sites', 'tl_timetable_rooms'],
-// 		'icon'   	=> 'bundles/cepharumtimetable/home.gif',
-// 	],
-// 	'people'	=> [
-// 		'tables'	=> ['tl_timetable_people'],
-// 		'icon'		=> 'bundles/cepharumtimetable/home.gif',
-// 	],
-// 	'styles'	=> [
-// 		'tables'	=> ['tl_timetable_styles'],
-// 		'icon'		=> 'bundles/cepharumtimetable/home.gif',
-// 	],
-// ];
-
-// $GLOBALS['BE_MOD']['content']['sites'] = [
-// 	'tables' 	=> ['tl_timetable_sites', 'tl_timetable_rooms'],
-// 	'icon'   	=> 'bundles/cepharumtimetable/home.gif',
-// ];
-// $GLOBALS['BE_MOD']['content']['people'] = [
-// 	'tables'	=> ['tl_timetable_people'],
-// 	'icon'		=> 'bundles/cepharumtimetable/home.gif',
-// ];
-// $GLOBALS['BE_MOD']['content']['styles'] = [
-// 	'tables'	=> ['tl_timetable_styles'],
-// 	'icon'		=> 'bundles/cepharumtimetable/home.gif',
-// ];
-
 /**
- * Front end modules
- * /
-array_insert($GLOBALS['FE_MOD'], 4, array
-(
-	'xing' => array
-	(
-		'xinglist'   => 'BugBuster\Xing\ModuleXingList'
-	)
-));
-*/
+ * Add front end module:
+ */
+if (! array_key_exists('Cepharum', $GLOBALS['FE_MOD']))
+		$GLOBALS['FE_MOD']['Cepharum'] = array();
+$GLOBALS['FE_MOD']['Cepharum']['Timetable'] = 'Cepharum\\TimetableBundle\\Module\\TimetableView';

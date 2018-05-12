@@ -5,7 +5,7 @@ namespace Cepharum\TimetableBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * This is the bundle class.
+ * Announcing the bundle to Symfony:
  */
 class CepharumTimetableBundle extends Bundle {
 }

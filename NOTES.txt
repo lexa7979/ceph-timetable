@@ -22,3 +22,25 @@ DCA-Array - $GLOBALS['TL_DCA'][<Tabellenname>]
  - https://docs.contao.org/books/api/dca/reference.html
  - https://docs.contao.org/books/api/dca/palettes.html
 
+#############################################
+
+Beispiel: "contao/faq-bundle"
+
+##############################################
+
+Model - Entity - Collection
+	(https://docs.contao.org/books/cookbook/de/Models.html)
+	Ein Model repräsentiert einen Datensatz aus einer Tabelle (Entität).
+	Models bieten einen Objekt-orientierten Zugriff auf Tabellen und ersetzen damit SQL- Statements weitgehend.
+	Darüber hinaus bieten sie viele weitere Vorteile. Mehrere Models werden durch eine Collection referenziert,
+	dies entspricht einer SQL-Abfrage, die mehr als eine Ergebniszeile liefert.
+	Contao 3 bietet - wenn dem Model eine DCA-Struktur zugeordnet ist - außerdem die Möglichkeit,
+	referenzierte Datensätze automatisch zu laden. Beispielsweise den Author (UserModel) eines Artikels (ArticleModel).
+	/src/Resources/models
+
+Frontend-Module
+	/src/Resources/modules
+
+Hooks
+	???
+
