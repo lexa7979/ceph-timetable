@@ -10,6 +10,32 @@ $GLOBALS['TL_DCA']['tl_timetable_sites'] = [
 		'sql'				=> ['keys' => ['id' => 'primary']]
 	],
 
+	// Structure within database:
+	'fields'	=> [
+		'id'		=> [
+			'sql'			=> "int(10) unsigned NOT NULL auto_increment"
+		],
+		'name'		=> [
+			'label'			=> &$GLOBALS['TL_LANG']['tl_timetable_sites']['name'],
+			'exclude'		=> true,
+			'search'		=> true,
+			'sorting'		=> true,
+			'flag'			=> 1,
+			'inputType'		=> 'text',
+			'eval'			=> ['mandatory' => true, 'maxlength' => 255],
+			'sql'			=> "varchar(255) NOT NULL default ''"
+		],
+		'sorting'	=> [
+			'label'			=> &$GLOBALS['TL_LANG']['MSC']['sorting'],
+			'sorting'		=> true,
+			'flag'			=> 11,
+			'sql'			=> "int(10) unsigned NOT NULL default '0'",
+		],
+		'tstamp'	=> [
+			'sql'			=> "int(10) unsigned NOT NULL default '0'"
+		],
+	],
+
 	// Structure of record list:
 	'list'		=> [
 		'sorting'	=> [
@@ -52,31 +78,6 @@ $GLOBALS['TL_DCA']['tl_timetable_sites'] = [
 				'href'		=> 'act=show',
 				'icon'		=> 'show.svg'
 			]
-		]
-	],
-
-	'fields'	=> [
-		'id'		=> [
-			'sql'			=> "int(10) unsigned NOT NULL auto_increment"
-		],
-		'sorting'	=> [
-			'label'			=> &$GLOBALS['TL_LANG']['MSC']['sorting'],
-			'sorting'		=> true,
-			'flag'			=> 11,
-			'sql'			=> "int(10) unsigned NOT NULL default '0'",
-		],
-		'tstamp'	=> [
-			'sql'			=> "int(10) unsigned NOT NULL default '0'"
-		],
-		'name'		=> [
-			'label'			=> &$GLOBALS['TL_LANG']['tl_timetable_sites']['name'],
-			'exclude'		=> true,
-			'search'		=> true,
-			'sorting'		=> true,
-			'flag'			=> 1,
-			'inputType'		=> 'text',
-			'eval'			=> ['mandatory' => true, 'maxlength' => 255],
-			'sql'			=> "varchar(255) NOT NULL default ''"
 		]
 	],
 

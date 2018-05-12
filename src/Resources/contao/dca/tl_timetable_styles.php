@@ -11,6 +11,26 @@ $GLOBALS['TL_DCA']['tl_timetable_styles'] = [
 		'sql'				=> ['keys' => ['id' => 'primary']]
 	],
 
+	// Structure within database:
+	'fields'	=> [
+		'id'		=> [
+			'sql'			=> "int(10) unsigned NOT NULL auto_increment"
+		],
+		'name'		=> [
+			'label'			=> &$GLOBALS['TL_LANG']['tl_timetable_styles']['name'],
+			'exclude'		=> true,
+			'search'		=> true,
+			'sorting'		=> true,
+			'flag'			=> 1,
+			'inputType'		=> 'text',
+			'eval'			=> ['mandatory' => true, 'maxlength' => 255],
+			'sql'			=> "varchar(255) NOT NULL default ''"
+		],
+		'tstamp'	=> [
+			'sql'			=> "int(10) unsigned NOT NULL default '0'"
+		],
+	],
+
 	// Listing records:
 	'list'		=> [
 		'sorting'	=> [
@@ -53,25 +73,6 @@ $GLOBALS['TL_DCA']['tl_timetable_styles'] = [
 				'href'		=> 'act=show',
 				'icon'		=> 'show.gif'
 			]
-		]
-	],
-
-	'fields'	=> [
-		'id'		=> [
-			'sql'			=> "int(10) unsigned NOT NULL auto_increment"
-		],
-		'tstamp'	=> [
-			'sql'			=> "int(10) unsigned NOT NULL default '0'"
-		],
-		'name'		=> [
-			'label'			=> &$GLOBALS['TL_LANG']['tl_timetable_styles']['name'],
-			'exclude'		=> true,
-			'search'		=> true,
-			'sorting'		=> true,
-			'flag'			=> 1,
-			'inputType'		=> 'text',
-			'eval'			=> ['mandatory' => true, 'maxlength' => 255],
-			'sql'			=> "varchar(255) NOT NULL default ''"
 		]
 	],
 

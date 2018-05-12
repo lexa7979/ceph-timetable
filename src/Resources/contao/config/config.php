@@ -8,6 +8,7 @@ array_insert($GLOBALS['BE_MOD'], 1, [
 		'rooms'		=> ['tables' => ['tl_timetable_sites', 'tl_timetable_rooms'],	'icon' => 'home.gif'],
 		'teachers'	=> ['tables' => ['tl_timetable_teachers'],						'icon' => 'home.gif'],
 		'styles'	=> ['tables' => ['tl_timetable_styles'],						'icon' => 'home.gif'],
+		'courses'	=> ['tables' => ['tl_timetable'],								'icon' => 'home.gif'],
 	]
 ]);
 

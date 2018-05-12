@@ -11,57 +11,10 @@ $GLOBALS['TL_DCA']['tl_timetable_teachers'] = [
 		'sql'				=> ['keys' => ['id' => 'primary']]
 	],
 
-	// Listing records:
-	'list'		=> [
-		'sorting'	=> [
-			'mode'			=> 1,		// "Records are sorted by a fixed field"
-			'flag'			=> 1,		// "Sort by initial letter ascending"
-			'panelLayout'	=> 'debug;filter;sort,search,limit',
-			'fields'		=> ['name']
-		],
-		'label'		=> [
-			'fields'		=> ['name'],
-			'showColumns'	=> true,
-			'format'		=> '%s',
-		],
-		'global_operations'=> [
-		],
-		'operations'=> [
-			'edit'		=> [
-				'label'		=> &$GLOBALS['TL_LANG']['tl_timetable_teachers']['edit'],
-				'href'		=> 'table=tl_timetable_teachers',
-				'icon'		=> 'edit.gif'
-			],
-			'editheader'=> [
-				'label'		=> &$GLOBALS['TL_LANG']['tl_timetable_teachers']['editheader'],
-				'href'		=> 'act=edit',
-				'icon'		=> 'header.gif',
-			],
-			'copy'		=> [
-				'label'		=> &$GLOBALS['TL_LANG']['tl_timetable_teachers']['copy'],
-				'href'		=> 'act=copy',
-				'icon'		=> 'copy.gif',
-			],
-			'delete'	=> [
-				'label'		=> &$GLOBALS['TL_LANG']['tl_timetable_teachers']['delete'],
-				'href'		=> 'act=delete',
-				'icon'		=> 'delete.gif',
-				'attributes'=> 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\'))return false;Backend.getScrollOffset()"',
-			],
-			'show'		=> [
-				'label'		=> &$GLOBALS['TL_LANG']['tl_timetable_teachers']['show'],
-				'href'		=> 'act=show',
-				'icon'		=> 'show.gif'
-			]
-		]
-	],
-
+	// Structure within database:
 	'fields'	=> [
 		'id'		=> [
 			'sql'			=> "int(10) unsigned NOT NULL auto_increment"
-		],
-		'tstamp'	=> [
-			'sql'			=> "int(10) unsigned NOT NULL default '0'"
 		],
 		'name'		=> [
 			'label'			=> &$GLOBALS['TL_LANG']['tl_timetable_teachers']['name'],
@@ -72,6 +25,49 @@ $GLOBALS['TL_DCA']['tl_timetable_teachers'] = [
 			'inputType'		=> 'text',
 			'eval'			=> ['mandatory' => true, 'maxlength' => 255],
 			'sql'			=> "varchar(255) NOT NULL default ''"
+		],
+		'tstamp'	=> [
+			'sql'			=> "int(10) unsigned NOT NULL default '0'"
+		],
+	],
+
+	// Listing records:
+	'list'		=> [
+		'sorting'	=> [
+			'mode'			=> 1,		// "Records are sorted by a fixed field"
+			'flag'			=> 1,		// "Sort by initial letter ascending"
+			'panelLayout'	=> 'filter;sort,search,limit',
+			'fields'		=> ['name']
+		],
+		'label'		=> [
+			'fields'		=> ['name'],
+			'showColumns'	=> true,
+			'format'		=> '%s'
+		],
+		'global_operations'=> [
+		],
+		'operations'=> [
+			'edit'		=> [
+				'label'		=> &$GLOBALS['TL_LANG']['tl_timetable_teachers']['edit'],
+				'href'		=> 'act=edit',
+				'icon'		=> 'edit.gif'
+			],
+			'copy'		=> [
+				'label'		=> &$GLOBALS['TL_LANG']['tl_timetable_teachers']['copy'],
+				'href'		=> 'act=copy',
+				'icon'		=> 'copy.gif'
+			],
+			'delete'	=> [
+				'label'		=> &$GLOBALS['TL_LANG']['tl_timetable_teachers']['delete'],
+				'href'		=> 'act=delete',
+				'icon'		=> 'delete.gif',
+				'attributes'=> 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\'))return false;Backend.getScrollOffset()"'
+			],
+			'show'		=> [
+				'label'		=> &$GLOBALS['TL_LANG']['tl_timetable_teachers']['show'],
+				'href'		=> 'act=show',
+				'icon'		=> 'show.gif'
+			]
 		]
 	],
 
