@@ -8,8 +8,9 @@ $item_group = [
 		'styles'		=> ['Tanzstile',	'Tanzstile verwalten'],
 		'courses'		=> ['Kurse',		'Tanzkurse verwalten'],
 	],
-	// 'FMD' => [
-	// ],
+	'FMD' => [
+		'timetableview'	=> ['Kursplan',		'Fügt der Seite einen Kursplan hinzu.'],
+	],
 ];
 foreach ($item_group as $type => $items) foreach ($items as $key => $value) $GLOBALS['TL_LANG'][$type][$key] = $value;
 

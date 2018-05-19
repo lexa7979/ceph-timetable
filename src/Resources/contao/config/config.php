@@ -13,8 +13,10 @@ array_insert($GLOBALS['BE_MOD'], 1, [
 ]);
 
 // Front end module(s):
-array_insert($GLOBALS['FE_MOD'], 3, ['Cepharum' => ['timetableview' => 'ModuleTimetableView']]);
-
-// if (! array_key_exists('Cepharum', $GLOBALS['FE_MOD']))
-// 		$GLOBALS['FE_MOD']['Cepharum'] = array();
-// $GLOBALS['FE_MOD']['Cepharum']['Timetable'] = 'Cepharum\\TimetableBundle\\Module\\TimetableView';
+array_insert($GLOBALS['FE_MOD'], 3, [
+	// Group title:
+	'Cepharum' => [
+		// Module title(s) and corresponding class name(s):
+		'timetableview' => 'Cepharum\Timetable\ModuleTimetable',
+	]
+]);
