@@ -2,11 +2,13 @@
 
 namespace Cepharum\Timetable;
 
+use Contao\Module;
+
 /**
  * Front end module
  */
 
-class ModuleTimetable extends \Module {
+class ModuleTimetable extends Module {
 
     /**
 	 * Title of the corresponding template
@@ -22,19 +24,19 @@ class ModuleTimetable extends \Module {
      */
     public function generate() {
 
-		// // Display a wildcard in the back end:
-        // if (TL_MODE == 'BE') {
-        //     /** @var \BackendTemplate|object $objTemplate */
-        //     $objTemplate = new \BackendTemplate('be_wildcard');
+		// Display a wildcard in the back end:
+        if (TL_MODE == 'BE') {
+            /** @var \BackendTemplate|object $objTemplate */
+            $objTemplate = new \BackendTemplate('be_wildcard');
 
-        //     $objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['ModuleCarList'][0]) . ' ###';
-        //     $objTemplate->title = $this->headline;
-        //     $objTemplate->id = $this->id;
-        //     $objTemplate->link = $this->name;
-        //     $objTemplate->href = 'contao?do=themes&table=tl_module&act=edit&id=' . $this->id;
+            $objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['timetableview'][0]) . ' ###';
+            $objTemplate->title = $this->headline;
+            $objTemplate->id = $this->id;
+            $objTemplate->link = $this->name;
+			$objTemplate->href = 'contao/main.php?do=themes&amp;table=tl_module&amp;act=edit&amp;id=' . $this->id;
 
-        //     return $objTemplate->parse();
-        // }
+            return $objTemplate->parse();
+        }
 
         return parent::generate();
     }
@@ -44,10 +46,10 @@ class ModuleTimetable extends \Module {
      */
     protected function compile() {
 
-        // $carService = \System::getContainer()->get('xuad_car.service.carservice');
+		$data = TimetableModel::getCompleteTimetable();
 
-        // $carList = $carService->findAll();
-
-        // $this->Template->carList = $carList;
+		$this->Template->timetable = $data['timetable'];
+		$this->Template->course_data = $data['courses'];
+		// $this->Template->weekdays = $data['weekdays'];
     }
 }

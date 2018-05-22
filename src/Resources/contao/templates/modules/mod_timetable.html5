@@ -1,11 +1,6 @@
 <div class="<?= $this->class; ?> block"<?= $this->cssID; ?>>
-    <div class="car-list">
-        <?php if(count($this->carList) > 0): ?>
-            <ul>
-                <?php foreach($this->carList as $car): /** @var \Xuad\CarBundle\Entity\Car $car */ ?>
-                    <li><strong><?= $car->getBrand() ?></strong><?= $car->getName() ?></li>
-                <?php endforeach; ?>
-            </ul>
-        <?php endif; ?>
-    </div>
+	<?php foreach ($this->timetable as $weekday => $d1): ?>
+		<h2>{{label::tl_timetable:weekdays_set:<?= $weekday ?>}}</h2>
+		<pre><?php var_dump($d1); ?></pre>
+	<?php endforeach; ?>
 </div>

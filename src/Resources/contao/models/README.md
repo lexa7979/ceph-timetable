@@ -1,7 +1,7 @@
 
-Models are helper classes than are used to access the database.
+Models are helper classes that are used to access the database.
 
-The base class "Model" implements a lot of properties and methods:
+The interface "Model" implements a lot of properties and methods:
 
 /**
  * - Values of every field of the given table $strTable ($id, $pid, $sorting, ...):
