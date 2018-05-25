@@ -24,10 +24,15 @@ $new_items = [
 	'is_forbeginners_switch'=> ['Fortgeschrittene',	'auch Anfänger'],
 	'is_fullybooked_switch'	=> ['freie Plätze',		'ausgebucht'],
 
-	'error_incomplete'	=> ['Fehler: Daten unvollständig',	'Fehler: Die Informationen im Datensatz sind unvollständig.'],
-	'no_description'=> ['(Beschreibung fehlt)',	'Sie haben noch keine Beschreibung eingegeben...'],
-	'no_ages'		=> ['(Altersgruppe fehlt)',	'Sie haben noch keine Altersgruppe angegeben...'],
+	'error_incomplete'	=> ['Fehler: Daten unvollständig', 'Fehler: Die Informationen im Datensatz sind unvollständig.'],
+	'error_collision'	=> ['Fehler: Raumkollision', 'Achtung: Für diese Zeit sind mehr als ein Kurs im gleichen Raum registiert.'],
+	'warning_teacher'	=> ['Warnung: Lehrer doppelt eingesetzt', 'Achtung: Dieser Lehrer ist für diese Zeit in mehr als einem Kurs registriert.'],
+	'no_description'	=> ['(Beschreibung fehlt)',	'Sie haben noch keine Beschreibung eingegeben...'],
+	'no_ages'			=> ['(Altersgruppe fehlt)',	'Sie haben noch keine Altersgruppe angegeben...'],
 
 	'weekdays_set'	=> ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag'],
+
+	'roomlist_caption_site_room'	=> '%s: Raum %s',
+	'roomlist_caption_room_site'	=> 'Raum %s (%s)',
 ];
 foreach ($new_items as $key => $value) $GLOBALS['TL_LANG']['tl_timetable'][$key] = $value;

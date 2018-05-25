@@ -20,3 +20,9 @@ array_insert($GLOBALS['FE_MOD'], 3, [
 		'timetableview' => 'Cepharum\Timetable\ModuleTimetable',
 	]
 ]);
+
+// Style sheet
+if (TL_MODE == 'BE')
+{
+	$GLOBALS['TL_CSS'][] = 'bundles/cepharumtimetable/style.css|static';
+}

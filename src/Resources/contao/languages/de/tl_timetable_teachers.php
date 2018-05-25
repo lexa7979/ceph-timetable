@@ -9,6 +9,8 @@ $new_items = [
 	'delete'		=> ['Lehrer löschen',		'Lehrer mit ID %s löschen'],
 	'show'			=> ['Lehrerdetails',		'Details des Lehrers mit ID %s betrachten'],
 
+	'delete_'		=> ['Löschen nicht möglich', 'Lehrer mit ID %s wird im Kursplan benutzt und kann daher nicht gelöscht werden'],
+
 	'id'			=> ['Datensatznummer',		'ID des Datensatzes'],
 	'tstamp'		=> ['Änderungsdatum',		'Datum und Uhrzeit der letzten Änderung'],
 	'name'			=> ['Lehrername',			'Welchen Namen hat der Lehrer?'],

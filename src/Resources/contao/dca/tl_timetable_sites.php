@@ -42,7 +42,7 @@ $GLOBALS['TL_DCA']['tl_timetable_sites'] = [
 			'mode'			=> 1,		// "Records are sorted by a fixed field"
 			'flag'			=> 1,		// "Sort by initial letter ascending"
 			'panelLayout'	=> 'debug;filter;sort,search,limit',
-			'fields'		=> ['name']
+			'fields'		=> ['name'],
 		],
 		'label'		=> [
 			'fields'		=> ['name'],
@@ -72,6 +72,8 @@ $GLOBALS['TL_DCA']['tl_timetable_sites'] = [
 				'href'		=> 'act=delete',
 				'icon'		=> 'delete.svg',
 				'attributes'=> 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\'))return false;Backend.getScrollOffset()"',
+				'button_callback'
+							=> array('Cepharum\Timetable\TimetableSitesBackend', 'generateDeleteButton'),
 			],
 			'show'		=> [
 				'label'		=> &$GLOBALS['TL_LANG']['tl_timetable_sites']['show'],

@@ -10,6 +10,8 @@ $new_items = [
 	'delete'		=> ['Gebäude löschen',		'Gebäude mit ID %s löschen'],
 	'show'			=> ['Gebäudedetails',		'Details des Gebäudes mit ID %s betrachten'],
 
+	'delete_'		=> ['Löschen nicht möglich', 'Gebäude mit ID %s wird im Kursplan benutzt und kann daher nicht gelöscht werden'],
+
 	'id'			=> ['Datensatznummer',	'ID des Datensatzes'],
 	'tstamp'		=> ['Änderungsdatum',	'Datum und Uhrzeit der letzten Änderung'],
 	'name'			=> ['Gebäudename',		'Welchen Namen hat das Gebäude?'],

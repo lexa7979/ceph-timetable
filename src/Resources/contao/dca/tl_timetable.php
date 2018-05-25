@@ -45,6 +45,8 @@ $GLOBALS['TL_DCA']['tl_timetable'] = [
 			'flag'			=> 1,							// "Sort by initial letter ascending"
 			'inputType'		=> 'select',
 			'foreignKey'	=> 'tl_timetable_rooms.roomnumber',	// Get options from a database table
+			'options_callback'
+							=> ['Cepharum\Timetable\TimetableBackend', 'listRooms'],
 			'sql'			=> "int(10) unsigned NOT NULL default '0'",
 			'relation'		=> ['type' => 'belongsTo', 'load' => 'lazy']
 		],
