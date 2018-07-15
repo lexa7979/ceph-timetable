@@ -1,6 +1,6 @@
 <?php
 
-$new_items = [
+$items = [
 	'title_legend'	=> 'Tanzstil',
 
 	'new'			=> ['Neuer Tanzstil',		'Neuen Tanzstil registrieren'],
@@ -14,5 +14,7 @@ $new_items = [
 	'id'			=> ['Datensatznummer',		'ID des Datensatzes'],
 	'tstamp'		=> ['Änderungsdatum',		'Datum und Uhrzeit der letzten Änderung'],
 	'name'			=> ['Bezeichnung',			'Wie heißt der Tanzstil?'],
+	'background'	=> ['Hintergrundfarbe',		'Geben den RBG-Code der Hintergrundfarbe an (z.B. "00FF00" für grün), die im Kursplan für diesen Tanzstil genutzt werden soll.'],
 ];
-foreach ($new_items as $key => $value) $GLOBALS['TL_LANG']['tl_timetable_styles'][$key] = $value;
+
+foreach ($items as $key => $value) $GLOBALS['TL_LANG']['tl_timetable_styles'][$key] = $value;

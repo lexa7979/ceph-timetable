@@ -1,6 +1,6 @@
 <?php
 
-$new_items = [
+$items = [
 	'title_legend'	=> 'Lehrerdaten',
 
 	'new'			=> ['Neuer Lehrer',			'Neuen Lehrer registrieren'],
@@ -15,4 +15,5 @@ $new_items = [
 	'tstamp'		=> ['Änderungsdatum',		'Datum und Uhrzeit der letzten Änderung'],
 	'name'			=> ['Lehrername',			'Welchen Namen hat der Lehrer?'],
 ];
-foreach ($new_items as $key => $value) $GLOBALS['TL_LANG']['tl_timetable_teachers'][$key] = $value;
+
+foreach ($items as $key => $value) $GLOBALS['TL_LANG']['tl_timetable_teachers'][$key] = $value;

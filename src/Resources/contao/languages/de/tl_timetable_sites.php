@@ -1,6 +1,6 @@
 <?php
 
-$new_items = [
+$items = [
 	'title_legend'	=> 'Gebäudedaten',
 
 	'new'			=> ['Neues Gebäude',		'Neues Gebäude registrieren'],
@@ -16,4 +16,5 @@ $new_items = [
 	'tstamp'		=> ['Änderungsdatum',	'Datum und Uhrzeit der letzten Änderung'],
 	'name'			=> ['Gebäudename',		'Welchen Namen hat das Gebäude?'],
 ];
-foreach ($new_items as $key => $value) $GLOBALS['TL_LANG']['tl_timetable_sites'][$key] = $value;
+
+foreach ($items as $key => $value) $GLOBALS['TL_LANG']['tl_timetable_sites'][$key] = $value;

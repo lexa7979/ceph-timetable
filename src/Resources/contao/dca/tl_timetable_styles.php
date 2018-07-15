@@ -7,8 +7,8 @@ $GLOBALS['TL_DCA']['tl_timetable_styles'] = [
 	// Table configuration:
 	'config'	=> [
 		'dataContainer'		=> 'Table',
-		'enableVersioning'	=> true,
-		'sql'				=> ['keys' => ['id' => 'primary']]
+		'enableVersioning'	=> false,
+		'sql'				=> ['keys' => ['id' => 'primary']],
 	],
 
 	// Structure within database:
@@ -24,7 +24,17 @@ $GLOBALS['TL_DCA']['tl_timetable_styles'] = [
 			'flag'			=> 1,
 			'inputType'		=> 'text',
 			'eval'			=> ['mandatory' => true, 'maxlength' => 255],
-			'sql'			=> "varchar(255) NOT NULL default ''"
+			'sql'			=> "varchar(255) NOT NULL default ''",
+		],
+		'background'=> [
+			'label'			=> &$GLOBALS['TL_LANG']['tl_timetable_styles']['background'],
+			'exclude'		=> true,
+			'search'		=> true,
+			'sorting'		=> true,
+			'flag'			=> 1,
+			'inputType'		=> 'text',
+			'eval'			=> ['minlength' => 6, 'colorpicker' => true],
+			'sql'			=> "varchar(6) NOT NULL DEFAULT '000000'",
 		],
 		'tstamp'	=> [
 			'sql'			=> "int(10) unsigned NOT NULL default '0'"
@@ -49,13 +59,8 @@ $GLOBALS['TL_DCA']['tl_timetable_styles'] = [
 		'operations'=> [
 			'edit'		=> [
 				'label'		=> &$GLOBALS['TL_LANG']['tl_timetable_styles']['edit'],
-				'href'		=> 'table=tl_timetable_styles',
-				'icon'		=> 'edit.gif'
-			],
-			'editheader'=> [
-				'label'		=> &$GLOBALS['TL_LANG']['tl_timetable_styles']['editheader'],
 				'href'		=> 'act=edit',
-				'icon'		=> 'header.gif',
+				'icon'		=> 'edit.gif',
 			],
 			'copy'		=> [
 				'label'		=> &$GLOBALS['TL_LANG']['tl_timetable_styles']['copy'],
@@ -80,6 +85,6 @@ $GLOBALS['TL_DCA']['tl_timetable_styles'] = [
 
 	'palettes'	=> [
 		'__selector__'		=> [],
-		'default'			=> 'name'
+		'default'			=> 'name,background'
 	],
 ];

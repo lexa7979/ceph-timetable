@@ -13,19 +13,41 @@ class TimetableBackend extends Backend {
 
 	public function listCourses($arrRow) {
 
+		$start = floor($arrRow['time'] / 60);
+		$end = $start + $arrRow['duration'];
+		$hour = floor($start / 60);
+
 		$problems = array();
 
 		// Ensure that there is no collision with another course:
-		$data = $this->Database->prepare("SELECT COUNT(*) AS nr FROM tl_timetable c WHERE c.weekday=? AND c.time=? AND c.room=?")
-					->execute($arrRow['weekday'], $arrRow['time'], $arrRow['room'])->next();
-		if ($data->nr > 1)
-			$problems[] = ['error', 'error_collision'];
+		$data = $this->Database->prepare("SELECT c.time AS time, c.duration AS duration FROM tl_timetable c WHERE c.weekday=? AND c.room=? AND c.id<>?")
+					->execute($arrRow['weekday'], $arrRow['room'], $arrRow['id']);
+		while ($row = $data->next()) {
+			$start2 = floor($row->time / 60);
+			$end2 = $start2 + $row->duration;
+			if (($start2 > $start && $start2 < $end) || ($start2 == $start) || ($start2 < $start && $end2 > $start)) {
+				$problems[] = ['error', 'error_collision'];
+				if (floor($start2 / 60) == $hour)
+					$problems[] = ['error', 'error_collision2'];
+				break;
+			}
+			if (floor($start2 / 60) == $hour) {
+				$problems[] = ['error', 'error_collision2'];
+				break;
+			}
+		}
 
 		// Check if the same teacher has another course at the same time:
-		$data = $this->Database->prepare("SELECT COUNT(*) AS nr FROM tl_timetable c WHERE c.weekday=? AND c.time=? AND c.teacher=?")
-					->execute($arrRow['weekday'], $arrRow['time'], $arrRow['teacher'])->next();
-		if ($data->nr > 1)
-			$problems[] = ['warning', 'warning_teacher'];
+		$data = $this->Database->prepare("SELECT c.time AS time, c.duration AS duration FROM tl_timetable c WHERE c.weekday=? AND c.teacher=? AND c.id<>?")
+					->execute($arrRow['weekday'], $arrRow['teacher'], $arrRow['id']);
+		while ($row = $data->next()) {
+			$start2 = floor($row->time / 60);
+			$end2 = $start2 + $row->duration;
+			if (($start2 > $start && $start2 < $end) || ($start2 == $start) || ($start2 < $start && $end2 > $start)) {
+				$problems[] = ['warning', 'warning_teacher'];
+				break;
+			}
+		}
 
 		// Query the related data out of the other tables:
 		$refData = [
@@ -47,16 +69,11 @@ class TimetableBackend extends Backend {
 		foreach ($refData as $k => $v)
 		 	$refTitle[$k] = $v->title;
 
-		// $roomdata = $this->Database->execute("SELECT * FROM tl_timetable_rooms r WHERE id = " . $arrRow['room'])->next();
-		// $sitedata = $this->Database->execute("SELECT * FROM tl_timetable_sites s WHERE id = " . $roomdata->pid)->next();
-		// $styledata = $this->Database->execute("SELECT * FROM tl_timetable_styles s WHERE id = " . $arrRow['style'])->next();
-		// $teacherdata = $this->Database->execute("SELECT * FROM tl_timetable_teachers t WHERE id = " . $arrRow['teacher'])->next();
-
 		$s = [
 			// 0 => $GLOBALS['TL_LANG']['tl_timetable']['time'][0],
-			1 => substr($arrRow['time'], 0, 5),
-			2 => $GLOBALS['TL_LANG']['tl_timetable']['room'][0] . ' ' . $refTitle['room'],	//$roomdata->roomnumber,
-			3 => $GLOBALS['TL_LANG']['tl_timetable']['site'][0] . ' ' . $refTitle['site'],	//$sitedata->name,
+			1 => sprintf("%02d:%02d", floor($arrRow['time'] / 3600), floor(($arrRow['time'] % 3600) / 60)),
+			2 => $GLOBALS['TL_LANG']['tl_timetable']['room'][0] . ' ' . $refTitle['room'],
+			3 => $GLOBALS['TL_LANG']['tl_timetable']['site'][0] . ' ' . $refTitle['site'],
 			4 => $refTitle['style'],	//$styledata->name,
 			5 => $GLOBALS['TL_LANG']['tl_timetable']['teacher'][0] . ' ' . $refTitle['teacher'],	//$teacherdata->name,
 			6 => ($arrRow['description'] == '') ? $GLOBALS['TL_LANG']['tl_timetable']['no_description'][0] : $arrRow['description'],

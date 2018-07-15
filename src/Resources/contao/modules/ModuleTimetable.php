@@ -50,6 +50,6 @@ class ModuleTimetable extends Module {
 
 		$this->Template->timetable = $data['timetable'];
 		$this->Template->course_data = $data['courses'];
-		// $this->Template->weekdays = $data['weekdays'];
+		$this->Template->lang = $data['lang'];
     }
 }
