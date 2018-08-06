@@ -46,7 +46,8 @@ class TimetableModel extends Model {
 
 		// Prepare first level of timetable - weekdays:
 		$timetable = [];
-		for ($wd = $range_data['w_min']; $wd <= $range_data['w_max']; $wd++) {
+		for ($wd = 0; $wd <= 5; $wd++) {
+		// for ($wd = $range_data['w_min']; $wd <= $range_data['w_max']; $wd++) {
 			$timetable[$wd] = [];
 			// Prepare second level of timetable - sites and rooms:
 			// (Ensure that only those rooms are included which are used for at least one course at all.)
