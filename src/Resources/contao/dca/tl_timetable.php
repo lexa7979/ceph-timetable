@@ -109,6 +109,16 @@ $GLOBALS['TL_DCA']['tl_timetable'] = [
 			'eval'			=> ['tl_class' => 'w50'],
 			'sql'			=> "varchar(255) NOT NULL default ''"
 		],
+		'audience'		=> [
+			'label'			=> &$GLOBALS['TL_LANG']['tl_timetable']['audience'],
+			'default'		=> array('children', 'teenager', 'adults'),
+			'exclude'		=> true,
+			'inputType'		=> 'checkboxWizard',
+			'options'		=> array('children', 'teenager', 'adults'),
+			'eval'			=> array('multiple' => true, 'tl_class' => 'wizard m12'),
+			'reference'		=> &$GLOBALS['TL_LANG']['tl_timetable'],
+			'sql'			=> "varchar(255) NOT NULL default ''"
+		],
 		'is_forbeginners'=> [
 			'label'			=> &$GLOBALS['TL_LANG']['tl_timetable']['is_forbeginners'],
 			'exclude'		=> true,
@@ -179,6 +189,6 @@ $GLOBALS['TL_DCA']['tl_timetable'] = [
 	// Structure of input form:
 	'palettes' 	=> [
 		'__selector__'		=> [],
-		'default'			=> '{time_place_legend},weekday,room,time,duration;{title_legend},style,teacher,description,ages,is_fullybooked,is_forbeginners',
+		'default'			=> '{time_place_legend},weekday,room,time,duration;{title_legend},audience,style,teacher,description,ages,is_fullybooked,is_forbeginners',
 	],
 ];

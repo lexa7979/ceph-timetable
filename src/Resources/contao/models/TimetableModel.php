@@ -26,7 +26,8 @@ class TimetableModel extends Model {
 		$objDatabase = Database::getInstance();
 
 		$rooms_data = $objDatabase->execute("SELECT r.id AS room_id, r.roomnumber AS roomnumber, s.name AS sitename FROM tl_timetable_rooms r INNER JOIN tl_timetable_sites s ON r.pid = s.id ORDER BY s.sorting, r.sorting")->fetchAllAssoc();
-		$courses_data = $objDatabase->execute("SELECT c.*, t.name AS teacher_name, s.name AS style_name, s.background AS background FROM tl_timetable c JOIN tl_timetable_teachers t ON c.teacher = t.id JOIN tl_timetable_styles s ON c.style = s.id")->fetchAllAssoc();
+		$courses_data = $objDatabase->execute("SELECT c.*, t.name AS teacher_name, s.id AS style_id, s.name AS style_name, s.background AS background FROM tl_timetable c JOIN tl_timetable_teachers t ON c.teacher = t.id JOIN tl_timetable_styles s ON c.style = s.id")->fetchAllAssoc();
+		$styles_data = $objDatabase->execute("SELECT s.id AS id, s.name AS name FROM tl_timetable_styles s ORDER BY s.name")->fetchAllAssoc();
 
 		// Get the range of weekdays and range of times in which courses take place:
 		$range_data = $objDatabase->execute("SELECT MIN(weekday) AS w_min, MAX(weekday) AS w_max, MIN(time) AS t_min, MAX(time) AS t_max FROM tl_timetable")->row();
@@ -69,9 +70,11 @@ class TimetableModel extends Model {
 								'end'				=> [floor($end / 60), $end % 60],
 								'teacher'			=> $c['teacher_name'],
 								'style'				=> $c['style_name'],
+								'style_id'			=> $c['style_id'],
 								'background'		=> $c['background'],
 								'description'		=> $c['description'],
 								'ages'				=> $c['ages'],
+								'audience'			=> implode(',', unserialize($c['audience'])),
 								'is_forbeginners'	=> ($c['is_forbeginners'] == 1),
 								'is_fullybooked'	=> ($c['is_fullybooked'] == 1),
 							];
@@ -86,6 +89,7 @@ class TimetableModel extends Model {
 		return [
 			'timetable' => $timetable,
 			'courses'	=> $courses_data,
+			'styles'	=> $styles_data,
 			'lang'		=> $GLOBALS['TL_LANG']['tl_timetable'],
 		];
 	}

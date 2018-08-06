@@ -22,8 +22,13 @@ $items = [
 	'style'			=> ['Tanzstil',			'Was lernen die Teilnehmer im Kurs?'],
 	'description'	=> ['Beschreibung',		'Geben Sie hier weitere Informationen über den Kurs an.'],
 	'ages'			=> ['Altersgruppe',		'Für welche Altersgruppe ist der Kurs gedacht?'],
+	'audience'		=> ['Zielgruppe',		'Für wen ist der Kurs geeignet?'],
 	'is_forbeginners' => ['für Anfänger?',	'Ist der Kurs auch für Anfänger geeignet?'],
 	'is_fullybooked'=> ['ausgebucht?',		'Ist der Kurs bereits ausgebucht?'],
+
+	'children'		=> ['Kinder',			'Der Kurs ist für Kinder geeignet.'],
+	'teenager'		=> ['Jugendliche',		'Der Kurs ist für Jugendliche geeignet.'],
+	'adults'		=> ['Erwachsene',		'Der Kurs ist für Erwachsene geeignet.'],
 
 	'is_forbeginners_switch'=> ['Fortgeschrittene',	'auch Anfänger'],
 	'is_fullybooked_switch'	=> ['freie Plätze',		'ausgebucht'],

@@ -1,0 +1,501 @@
+.mod_timetableview {
+
+	.headline {
+		@include set_dynamic(margin, 28px 19px 0px 19px, 37px 0px 0px 0px, 125px 0px 0px 0px);
+
+		background: none;
+		color: white;
+		@include set_dynamic(font-size, 22px, 19px, 36px);
+		font-weight: bold;
+		text-transform: uppercase;
+		line-height: 115%;
+	}
+
+	.filter {
+
+		.filter_header {
+			@include set_dynamic(margin, 16px 0px 0px 0px, 23px 0px 0px 0px, 28px 0px 0px 0px);
+			@include set_dynamic(height, 30px, 29px, 45px);
+
+			display: flex;
+			flex-flow: row nowrap;
+
+			.text {
+				flex: 1 1 auto;
+				@include set_dynamic(padding, 2px 18px, 2px 7px, 2px 14px);
+				margin: 0;
+
+				color: white;
+				@include set_dynamic(font-size, 16px, 15px, 22px);
+				font-weight: 600;
+				white-space: nowrap;
+
+				@include auto_pos($h_align: flex-start);
+			}
+			.link {
+				flex: 0 0 auto;
+				@include set_dynamic(padding, 2px 7px 2px 11px, 2px 6px 2px 10px, 2px 12px 2px 14px);
+				margin: 0;
+
+				background: white;
+				@include set_dynamic(font-size, 14px, 14px, 25px);
+
+				@include auto_pos($item_order: row);
+
+				i {
+					font-size: 1.5em;
+				}
+			}
+		}
+
+		form {
+			margin: 6px 0px 0px 0px;
+
+			display: grid;
+			@include set_dynamic(grid-template-columns, null, repeat(4, 1fr), repeat(6, 16.25%));
+			@include set_dynamic(grid-gap, 4px, 3px 0.5%, 6px 0.5%);
+			@include set_mobile(grid-auto-flow, row, column);
+
+			.filter_group {
+				@include set_dynamic(padding, 3px 0px, 5px 0px, 8px 0px);
+
+				background: white;
+
+				display: grid;
+				grid-auto-flow: row;
+				align-content: start;
+				align-items: start;
+
+				&.audiences {
+					@include set_mobile(grid-column, null, 1 / span 1);
+					@include set_mobile(grid-template-columns, repeat(3, 33.3%), null);
+				}
+				&.styles {
+					@include set_mobile(grid-column, null, 2 / span 3);
+					grid-template-columns: repeat(3, 33.3%);
+				}
+				&.weekdays {
+					@include set_dynamic(grid-template-columns, repeat(3, 33.3%), repeat(4, 25%), 50% 50%);
+					@include set_dynamic(grid-column, null, 1 / span 4, 5 / span 2);
+					@include set_tablet(grid-row, 2 / span 1);
+				}
+
+				label {
+					// @include set_dynamic(margin, 10px 0px 0px 15px, 6px 0px 0px 13px, 13px 0px 0px 25px);
+					@include set_dynamic(margin, 10px 0px 0px 15px, 0px 0px 0px 13px, 13px 0px 0px 25px);
+
+					color: black;
+					@include set_dynamic(font-size, 12px, 12px, 20px);
+					@include set_dynamic(font-stretch, condensed, null, condensed);
+					white-space: nowrap;
+
+					@include auto_pos($item_order: row, $h_align: flex-start);
+				}
+
+				input[type=checkbox] {
+					padding: 100px;
+				}
+
+				label:last-child {
+					// @include set_dynamic(margin-bottom, 10px, 6px, 13px);
+					@include set_dynamic(margin-bottom, 10px, null, 13px);
+				}
+			}
+		}
+
+		.filter_footer {
+
+			@include set_dynamic(margin-top, 7px, 6px, 15px);
+
+			display: flex;
+			flex-flow: row nowrap;
+			@include set_mobile(justify-content, flex-start, flex-end);
+
+			.full, .beginners {
+
+				position: relative;
+				overflow: hidden;
+
+				@include set_dynamic(margin, 0px 15px 0px 10px, 0px 0px 0px 39px, 0px 0px 0px 38px);
+				@include set_dynamic(padding, 0px 0px 0px 14px, 0px 0px 0px 15px, 4px 0px 0px 19px);
+
+				@include set_dynamic(font-size, 12px, 12px, 17px);
+				font-stretch: condensed;
+
+				.icon {
+					width: 36px;
+					height: 36px;
+
+					position: absolute;
+					z-index: 3;
+					@include set_dynamic(left, -24px, -22px, -20px);
+					@include set_dynamic(top, -24px, -22px, -20px);
+					-webkit-transform: rotate(45deg);
+					-moz-transform: rotate(45deg);
+					-o-transform: rotate(45deg);
+					-ms-transform: rotate(45deg);
+					transform: rotate(45deg);
+				}
+			}
+
+			.full .icon {
+				background: $colorRed;
+			}
+			.beginners .icon {
+				background: $colorGreen;
+			}
+		}
+	}
+
+	.data {
+		display: flex;
+		flex-flow: row wrap;
+	
+		.daybox {
+			flex: 0 0 auto;
+			margin-left: 9px;
+			margin-bottom: 75px;
+	
+			display: grid;
+			grid-template-columns: 64px auto;
+	
+			&.hidden {
+				display: none;
+			}
+
+			.timesbox {
+				padding-top: 121px;
+	
+				.hours {
+					.hour {
+						height: 80px;
+						margin-top: 12px;
+		
+						color: white;
+						font-family: ubuntu_condensed;
+						font-size: 17px;
+		
+						display: flex;
+						align-items: flex-start;
+						justify-content: flex-start;
+					}
+				}
+			}
+			
+			.collector_data {
+	
+				.weekdaybox {
+					height: 35px;
+					background: #997B3C;
+		
+					color: white;
+					font-family: ubuntu;
+					font-weight: 600;
+					font-size: 22px;
+					text-align: center;
+		
+					display: flex;
+					align-items: center;
+					justify-content: center;
+				}
+	
+				.collector_buildings {
+	
+					display: grid;
+					grid-column-gap: 16px;
+					grid-auto-flow: column;
+	
+					.buildingbox {
+	
+						.building_title {
+							margin-top: 6px;
+							height: 35px;
+							background: #DECDB3;
+							
+							color: black;
+							font-family: ubuntu_condensed;
+							font-size: 22px;
+							text-align: center;
+							line-height: 35px;
+		
+							display: flex;
+							align-items: center;
+							justify-content: center;
+						}
+	
+						.collector_rooms {
+	
+							display: grid;
+							grid-column-gap: 6px;
+							grid-auto-flow: column;
+							
+							.roombox {
+								width: 115px;
+								
+								.room {
+									height: 35px;
+									margin-bottom: 22px;
+									background: white;
+									
+									color: black;
+									font-family: ubuntu_condensed;
+									font-size: 22px;
+									text-align: center;
+		
+									display: flex;
+									align-items: center;
+									justify-content: center;
+								}
+								
+								.nocourse {
+									margin-top: 12px;
+									height: 80px;
+									background: white;
+				
+									color: black;
+									font-family: ubuntu_condensed;
+									font-size: 17px;
+									text-align: center;
+									line-height: 20px;
+		
+									display: flex;
+									align-items: center;
+									justify-content: center;
+								}
+								
+								.course {
+									margin-top: 12px;
+									background: white;
+									cursor: pointer;
+		
+									position: relative;
+	
+									.course_hidden {
+										margin-top: 12px;
+										height: 80px;
+										background: white;
+
+										display: none;
+									}
+
+									&.hidden {
+										.course_hidden {
+											display: block;
+										}
+										.course_data, .course_details {
+											display: none;
+										}
+									}
+
+									.course_data {
+										height: 80px;
+										color: black;
+										font-family: ubuntu_condensed;
+										font-size: 17px;
+										text-align: center;
+										line-height: 20px;
+		
+										display: flex;
+										align-items: center;
+										justify-content: center;
+		
+										position: relative;
+										overflow: hidden;
+	
+										.full, .beginners {
+											width: 36px;
+											height: 36px;
+											border: 1px solid black;
+	
+											position: absolute;
+											z-index: 3;
+											left: -23px;
+											top: -23px;
+											-webkit-transform: rotate(45deg);
+											-moz-transform: rotate(45deg);
+											-o-transform: rotate(45deg);
+											-ms-transform: rotate(45deg);
+											transform: rotate(45deg);
+										}
+	
+										.full {
+											background: #FF0000;
+										}
+	
+										.beginners {
+											background: #82AB12;
+										}
+									}
+	
+									.course_details {
+										width: 141px;
+										height: 116px;
+										background: #54CDFF;
+			
+										color: black;
+										font-family: ubuntu_condensed;
+										font-size: 17px;
+										text-align: center;
+										line-height: 20px;
+	
+										position: absolute;
+										z-index: 4;
+										left: -13px;
+										top: -18px;
+										display: none;
+										align-items: center;
+										justify-content: center;
+									}
+	
+									.visible {
+										display: flex;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+.timetable_prices {
+	//------- dynamic properties -------//
+	@include set_dynamic(margin, 80px 0px 0px 0px, 33px 0px 0px 0px, 53px 0px 0px 0px);
+	// margin: 0px 0px 43px 0px;
+	//----------------------------------//
+	background: none;
+
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: flex-start;
+	align-items: stretch;
+	
+	.range1:not(.range_price) {
+		//------- dynamic properties -------//
+		@include set_mobile(margin, 0px 19px, 0px);
+		// margin: 0px -6px 0px 0px;
+		//----------------------------------//
+		width: 100%;
+
+		.ce_headline {
+			//------- dynamic properties -------//
+			@include set_dynamic(padding, 0px 0px 22px 0px, 0px 0px 19px 0px, 0px 0px 53px 0px);
+			// margin: 0px 0px 43px 0px;
+			@include set_dynamic(font-size, 22px, 22px, 36px);
+			// font-size: 2.4rem;
+			//----------------------------------//
+
+			font-weight: bold;
+			line-height: 115%;
+			text-transform: uppercase;
+		}
+	}
+
+	.range_price {
+		//------- dynamic properties -------//
+		@include set_dynamic(margin, 0px -4px 0px 0px, 0px -3px 0px 0px, 0px -6px 0px 0px);
+		// margin: 0px -6px 0px 0px;
+		//----------------------------------//
+
+		display: flex;
+		flex-flow: row wrap;
+		align-items: stretch;
+		align-content: flex-start;
+
+		.ce_text {
+			//------- dynamic properties -------//
+			@include set_dynamic(flex, 1 0 35%, 1 0 23%, 1 0 18%);
+			// flex: 1 0 170px;
+			// min-width: 170px;
+			@include set_dynamic(margin, 0px 4px 4px 0px, 0px 3px 3px 0px, 0px 6px 6px 0px);
+			// margin: 0px 6px 6px 0px;
+			@include set_dynamic(padding, 23px 6px, 21px 4px, 34px 6px);
+			// padding: 35px 0px;
+			//----------------------------------//
+
+			overflow: hidden;
+
+			@include auto_pos($v_align: flex-start);
+
+			h1, h2 {
+				//------- dynamic properties -------//
+				@include set_dynamic(margin, 0px 0px 11px 0px, 0px 0px 9px 0px, 0px 0px 15px 0px);
+				// margin: 0px 0px 15px 0px
+				@include set_dynamic(width, 70px, 64px, 106px);
+				// width: 106px
+				@include set_dynamic(height, 70px, 64px, 106px);
+				// height: 106px
+				@include set_dynamic(border-radius, 35px, 32px, 53px);
+				// border-radius: 53px
+				@include set_dynamic(font-size, 16px, 15px, 30px);
+				// font-size: 1.9rem;
+				//----------------------------------//
+
+				background: white;
+				font-weight: 600;
+				text-align: center;
+				white-space: nowrap;
+
+				@include auto_pos;
+			}
+
+			p {
+				//------- dynamic properties -------//
+				@include set_dynamic(margin, 3px 0px, 2px 0px, 5px 0px);
+				// margin: 5px 0px 5px 0px;
+				@include set_dynamic(font-size, 16px, 15px, 22px);
+				// font-size: 1.4rem;
+				//----------------------------------//
+
+				color: white;
+				font-weight: normal;
+				line-height: 135%;
+				text-align: center;
+			}
+		}
+	}
+
+	.range_price + .some_range {
+		//------- dynamic properties -------//
+		@include set_dynamic(margin, 0px -4px 0px 0px, 0px -3px 0px 0px, 0px -6px 0px 0px);
+		// margin: 0px -6px 0px 0px;
+		@include set_mobile(flex-flow, column nowrap, row wrap);
+		// flex-flow: row wrap;
+		//----------------------------------//
+
+		display: flex;
+		align-items: stretch;
+		// align-content: flex-start;
+
+		.ce_text {
+			//------- dynamic properties -------//
+			@include set_mobile(flex, null, 1 0 35%);
+			// flex: 1 0 340px;
+			@include set_dynamic(margin, 0px 4px 4px 0px, 0px 3px 3px 0px, 0px 6px 6px 0px);
+			// margin: 0px 6px 6px 0px;
+			@include set_dynamic(padding, 19px, 19px, 35px 50px);
+			// padding: 20px 40px;
+			//----------------------------------//
+			background: $colorGray;
+
+			@include auto_pos($item_order: row, $h_align: flex-start, $v_align: flex-start);
+			// display: flex;
+			// flex-flow: row nowrap;
+			// align-items: flex-start;
+
+			p {
+				//------- dynamic properties -------//
+				@include set_dynamic(font-size, 14px, 12px, 22px);
+				// font-size: 1.4rem;
+				//----------------------------------//
+				margin: 0px;
+
+				font-weight: normal;
+				line-height: 165%;
+				text-align: left;
+			}
+		}
+	}
+}
