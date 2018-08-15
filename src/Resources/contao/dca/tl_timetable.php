@@ -155,7 +155,8 @@ $GLOBALS['TL_DCA']['tl_timetable'] = [
 		],
 		'label' 	=> [
 			// 'fields'		=> ['weekday', 'time', 'room:tl_timetable_rooms.roomnumber', 'teacher:tl_timetable_teachers.name', 'style:tl_timetable_styles.name', 'description', 'ages'],
-			// 'format'		=> '%s',
+			'fields'		=> ['weekday'],
+			'format'		=> '%s',
 			'showColumns'	=> false,
 			'label_callback'=> [TimetableBackend::class, 'listCourses'],
 		],
