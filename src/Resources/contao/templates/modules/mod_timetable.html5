@@ -1,79 +1,99 @@
 
 <div class="<?= $this->class ?> block"<?= $this->cssID ?>>
 
-	<div class="headline">Dein Kursplan</div>
+<div class="headline">Dein Kursplan</div>
 
-	<div class="filter">
-		<div class="filter_header col_rose">
-			<div class="text">Filter Kursplan</div>
-			<!--<div class="link">Kursplan als pdf&nbsp;&nbsp;<i class="fal fa-angle-right"></i></div>-->
-		</div>
-		<form id="timetable_filter" action="" onchange="timetable_applyFilter();">
-			<div class="filter_group audiences">
-<?php							foreach (array('children', 'teenager', 'adults') as $i => $s):	?>
-				<label><input type="checkbox" name="audiences" value="<?= $s ?>"/>&nbsp;&nbsp;{{label::tl_timetable:<?= $s ?>:0}}</label>
-<?php							endforeach;	?>
-			</div>
-			<div class="filter_group styles">
-<?php							foreach ($this->styles as $data):	?>
-				<label><input type="checkbox" name="styles" value="<?= $data['id'] ?>"/>&nbsp;&nbsp;<?= $data['name'] ?></label>
-<?php							endforeach;	?>
-			</div>
-			<div class="filter_group weekdays">
-<?php							for ($i = 0; $i < 6; $i++):	?>
-				<label><input type="checkbox" name="weekdays" value="<?= $i ?>"/>&nbsp;&nbsp;{{label::tl_timetable:weekdays_set:<?= $i ?>}}</label>
-<?php							endfor;	?>
-			</div>
-		</form>
-		<div class="filter_footer">
-			<div class="full"><div class="icon"></div>Kurs fast voll</div>
-			<div class="beginners"><div class="icon"></div>Kurs für Einsteiger</div>
-		</div>
+<div class="filter">
+	<div class="filter_header">
+		<div class="text">Filter Kursplan</div>
+		<!--<div class="link">Kursplan als pdf&nbsp;&nbsp;<i class="fal fa-angle-right"></i></div>-->
 	</div>
+	<form id="timetable_filter" action="" onchange="timetable_applyFilter();">
+		<div class="filter_group audiences"><?php
+							foreach (array('children', 'teenager', 'adults') as $i => $s):	?>	
+			<label><input type="checkbox" name="audiences" value="<?= $s ?>"/>&nbsp;&nbsp;{{label::tl_timetable:<?= $s ?>:0}}</label><?php
+							endforeach;	?>	
+		</div>
+		<div class="filter_group styles"><?php
+							$styles_cache = array();
+							foreach ($this->styles as $key => $value):	?>	
+			<label><input type="checkbox" name="styles" value="<?= $key ?>"/>&nbsp;&nbsp;<?= $value ?></label><?php
+							endforeach;	?>	
+		</div>
+		<div class="filter_group weekdays"><?php
+							for ($i = 0; $i < 6; $i++):	?>	
+			<label><input type="checkbox" name="weekdays" value="<?= $i ?>"/>&nbsp;&nbsp;{{label::tl_timetable:weekdays_set:<?= $i ?>}}</label><?php
+							endfor;	?>	
+		</div>
+	</form>
+	<div class="filter_footer">
+		<!--<div class="full"><div class="icon"></div>Kurs fast voll</div>-->
+		<div class="beginners"><div class="icon"></div>Kurs für Einsteiger</div>
+	</div>
+</div>
 
-	<div class="data">
-<?php							foreach ($this->timetable as $weekday => $data):	?>
-		<div class="daybox" contao-filter="weekday:<?= $weekday ?>">
-			<div class="timesbox">
-				<div class="hours">
-<?php								foreach (array_keys(current(current($data))) as $hour): ?>
-					<div class="hour"><?= sprintf($this->lang['format_frontend_time1'], $hour); ?></div>
-<?php								endforeach;	?>
-				</div>
-			</div>
-			<div class="collector_data">
-				<div class="weekdaybox">{{label::tl_timetable:weekdays_set:<?= $weekday ?>}}</div>
-				<div class="collector_buildings">
-<?php								foreach ($data as $building => $data2):	?>
-					<div class="buildingbox">
-						<div class="building_title"><?= $building; ?></div>
-						<div class="collector_rooms">
-<?php									foreach ($data2 as $room => $data3):	?>
-							<div class="roombox">
-								<div class="room"><?= $room; ?></div>
-<?php										foreach ($data3 as $hour => $c):
-												if (is_array($c)):
-													$icon = ($c['is_fullybooked']) ? '<div class="full"></div>' : (($c['is_forbeginners']) ? '<div class="beginners"></div>' : '');
-													$back = ($c['background']) ? " style=\"background: #{$c['background']}\"" : '';	?>
-								<div class="course"<?= $back; ?> onclick="timetable_toggleDetails(<?= $c['array-key']; ?>);" contao-filter="style:<?= $c['style_id']; ?>;audience:<?= $c['audience']; ?>">
-									<div class="course_hidden"></div>
-									<div class="course_data">
-										<?= $icon; ?><div><?= $c['style']; ?><br/><?= $c['description']; ?><br/><?= $c['ages']; ?><br/></div>
-									</div>
-									<div class="course_details" id="course_details<?= $c['array-key']; ?>"><?= sprintf($this->lang['format_frontend_time2'], $c['start'][0], $c['start'][1], $c['end'][0], $c['end'][1]); ?><br/><?= $c['style']; ?><br/><?= $c['description']; ?><br/><?= $c['ages']; ?><br/><?= $c['teacher']; ?><br/></div>
-								</div>
-<?php											else:	?>
-								<div class="nocourse"></div>
-<?php											endif;	?>
-<?php										endforeach;	?>
-							</div>
-<?php									endforeach;	?>
-						</div>
-					</div>
-<?php								endforeach;	?>
-				</div>
-			</div>
-		</div>
-<?php							endforeach;	?>
-	</div>
+<div class="data"><?php
+							foreach ($this->timetable as $weekday => $data):
+								// $times_printed = false;
+								$col_count = 0;
+								foreach ($data as $data2)
+									$col_count += count($data2);	?>	
+	<div class="daybox width<?= $col_count ?>" data-filter="weekday:<?= $weekday ?>">
+		<div class="weekday_title">
+			<i class="fal fa-angle-left"></i>
+			<div>{{label::tl_timetable:weekdays_set:<?= $weekday ?>}}</div>
+			<i class="fal fa-angle-right"></i>
+		</div><?php
+
+								$extra_space = '';
+								foreach ($data as $building => $data2):
+									$span = ' span' . count($data2);	?>	
+		<div class="building_title<?= $span ?><?= $extra_space ?>"><?= $building ?></div><?php
+									$extra_space = ' extraspace';
+								endforeach;
+
+								$first_building = true;
+								foreach ($data as $building => $data2):
+									$extra_space = ($first_building) ? '' : ' extraspace';
+									foreach ($data2 as $room => $data3):	?>	
+		<div class="room<?= $extra_space ?>"><?= $room ?></div><?php
+										$extra_space = '';
+									endforeach;
+									$first_building = false;
+								endforeach;
+
+								foreach (array_keys(current(current($data))) as $hour):
+									$times_printed = false;
+									$first_building = true;
+									foreach ($data as $building => $data2):
+										$extra_space = ($first_building) ? '' : ' extraspace';
+										foreach ($data2 as $room => $data3):
+											$c = $data3[$hour];
+											$extra_class = ($times_printed) ? '' : ' hourbox';
+											$extra_div = ($times_printed) ? '' : '<div class="hour">' . sprintf($this->lang['format_frontend_time1'], $hour) . '</div>';
+											if (is_array($c)):
+												$icon = ($c['is_fullybooked']) ? '<div class="full"></div>' :
+															(($c['is_forbeginners']) ? '<div class="beginners"></div>' : '');
+												$back = ($c['background']) ? " style=\"background: #{$c['background']}\"" : '';
+												$filter = "style:{$c['style_id']};audience:{$c['audience']}";	?>	
+		<div class="course<?= $extra_class ?><?= $extra_space ?>" id="course_data<?= $c['array-key'] ?>"<?= $back; ?> data-filter="<?= $filter; ?>"><?php
+												if (! $times_printed):	?>	
+			<div class="hour"><?= sprintf($this->lang['format_frontend_time1'], $hour) ?></div><?php
+												endif;	?>	
+			<div class="course_hidden"></div>
+			<div class="course_data" onclick="timetable_toggleDetails(<?= $c['array-key']; ?>);"><?= $icon ?><?= $c['style'] ?><br/><?= $c['description'] ?><br/><?= $c['ages'] ?><br/></div>
+			<div class="course_details" onclick="timetable_toggleDetails(<?= $c['array-key']; ?>);"><?= sprintf($this->lang['format_frontend_time2'], $c['start'][0], $c['start'][1], $c['end'][0], $c['end'][1]); ?><br/><?= $c['style'] ?><br/><?= $c['description'] ?><br/><?= $c['ages'] ?><br/><?= $c['teacher'] ?><br/></div>
+		</div><?php
+											else:	?>	
+		<div class="nocourse<?= $extra_class ?><?= $extra_space ?>"><?= $extra_div ?></div><?php
+											endif;
+											$times_printed = true;
+											$extra_space = '';
+										endforeach;
+										$first_building = false;
+									endforeach;
+								endforeach;	?>	
+	</div><?php
+							endforeach;	?>	
+</div>
 </div>

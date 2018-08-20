@@ -1,10 +1,11 @@
 .mod_timetableview {
 
 	.headline {
-		@include set_dynamic(margin, 28px 19px 0px 19px, 37px 0px 0px 0px, 125px 0px 0px 0px);
+		@include set_dynamic(margin, 28px 19px 0px 19px, 37px 0px 0px 0px, 125px 75px 0px 75px);
 
 		background: none;
 		color: white;
+		font-family: barnastencil;
 		@include set_dynamic(font-size, 22px, 19px, 36px);
 		font-weight: bold;
 		text-transform: uppercase;
@@ -14,8 +15,10 @@
 	.filter {
 
 		.filter_header {
-			@include set_dynamic(margin, 16px 0px 0px 0px, 23px 0px 0px 0px, 28px 0px 0px 0px);
+			@include set_dynamic(margin, 16px 0px 0px 0px, 23px 0px 0px 0px, 28px 75px 0px 75px);
 			@include set_dynamic(height, 30px, 29px, 45px);
+
+			background: $colorGrey2;
 
 			display: flex;
 			flex-flow: row nowrap;
@@ -37,10 +40,15 @@
 				@include set_dynamic(padding, 2px 7px 2px 11px, 2px 6px 2px 10px, 2px 12px 2px 14px);
 				margin: 0;
 
-				background: white;
+				color: white;
 				@include set_dynamic(font-size, 14px, 14px, 25px);
+				cursor: pointer;
 
 				@include auto_pos($item_order: row);
+
+				&:hover {
+					background: $colorPastelGrey2;
+				}
 
 				i {
 					font-size: 1.5em;
@@ -49,7 +57,7 @@
 		}
 
 		form {
-			margin: 6px 0px 0px 0px;
+			@include set_dynamic(margin, 4px 0px 0px 0px, 3px 0px 0px 0px, 6px 75px 0px 75px);
 
 			display: grid;
 			@include set_dynamic(grid-template-columns, null, repeat(4, 1fr), repeat(6, 16.25%));
@@ -81,31 +89,24 @@
 				}
 
 				label {
-					// @include set_dynamic(margin, 10px 0px 0px 15px, 6px 0px 0px 13px, 13px 0px 0px 25px);
 					@include set_dynamic(margin, 10px 0px 0px 15px, 0px 0px 0px 13px, 13px 0px 0px 25px);
 
 					color: black;
+					@include set_dynamic(font-family, ubuntu_condensed, null, ubuntu_condensed);
 					@include set_dynamic(font-size, 12px, 12px, 20px);
-					@include set_dynamic(font-stretch, condensed, null, condensed);
 					white-space: nowrap;
 
 					@include auto_pos($item_order: row, $h_align: flex-start);
 				}
 
-				input[type=checkbox] {
-					padding: 100px;
-				}
-
 				label:last-child {
-					// @include set_dynamic(margin-bottom, 10px, 6px, 13px);
 					@include set_dynamic(margin-bottom, 10px, null, 13px);
 				}
 			}
 		}
 
 		.filter_footer {
-
-			@include set_dynamic(margin-top, 7px, 6px, 15px);
+			@include set_dynamic(margin, 7px 0px 0px 0px, 6px 0px 0px 0px, 15px 75px 0px 75px);
 
 			display: flex;
 			flex-flow: row nowrap;
@@ -117,10 +118,10 @@
 				overflow: hidden;
 
 				@include set_dynamic(margin, 0px 15px 0px 10px, 0px 0px 0px 39px, 0px 0px 0px 38px);
-				@include set_dynamic(padding, 0px 0px 0px 14px, 0px 0px 0px 15px, 4px 0px 0px 19px);
+				@include set_dynamic(padding, 0px 0px 0px 14px, 0px 0px 0px 15px, 2px 0px 2px 18px);
 
 				@include set_dynamic(font-size, 12px, 12px, 17px);
-				font-stretch: condensed;
+				font-family: ubuntu_condensed;
 
 				.icon {
 					width: 36px;
@@ -148,212 +149,209 @@
 	}
 
 	.data {
+		@include set_dynamic(margin-right, null, 60px, 75px);
 		display: flex;
-		flex-flow: row wrap;
-	
+		@include set_mobile(flex-flow, column nowrap, row wrap);
+		@include set_dynamic(justify-content, null, space-evenly, space-evenly);
+
 		.daybox {
 			flex: 0 0 auto;
-			margin-left: 9px;
-			margin-bottom: 75px;
-	
+			@include set_dynamic(margin, 24px 10px 0px 10px, 34px 0px 0px 60px, 38px 0px 0px 75px);
+
 			display: grid;
-			grid-template-columns: 64px auto;
+			&.width0	{ display: none; }
+			&.width1	{ grid-template-columns: 100%;				.weekday_title { grid-column: 1 / span 1; } }
+			&.width2	{ grid-template-columns: repeat(2, 1fr);	.weekday_title { grid-column: 1 / span 2; } }
+			&.width3	{ grid-template-columns: repeat(3, 1fr);	.weekday_title { grid-column: 1 / span 3; } }
+			&.width4	{ grid-template-columns: repeat(4, 1fr);	.weekday_title { grid-column: 1 / span 4; } }
+			&.width5	{ grid-template-columns: repeat(5, 1fr);	.weekday_title { grid-column: 1 / span 5; } }
+			&.width6	{ grid-template-columns: repeat(6, 1fr);	.weekday_title { grid-column: 1 / span 6; } }
+			&.wdith7	{ grid-template-columns: repeat(7, 1fr);	.weekday_title { grid-column: 1 / span 7; } }
+			&.wdith8	{ grid-template-columns: repeat(8, 1fr);	.weekday_title { grid-column: 1 / span 8; } }
+			&.wdith9	{ grid-template-columns: repeat(9, 1fr);	.weekday_title { grid-column: 1 / span 9; } }
+			&.wdith10	{ grid-template-columns: repeat(10, 1fr);	.weekday_title { grid-column: 1 / span 10;} }
+			@include set_dynamic(grid-gap, 0px 3px, 0px 5px, 0px 6px);
 	
 			&.hidden {
 				display: none;
 			}
 
-			.timesbox {
-				padding-top: 121px;
+			.weekday_title {
+				@include set_dynamic(height, 20px, 28px, 35px);
+
+				background: $colorGrey2;
+				color: white;
+				@include set_dynamic(font-size, 11px, 15px, 22px);
+				font-weight: 600;
+				text-align: center;
+				white-space: nowrap;
+
+				@include auto_pos($item_order: row);
+
+				div {
+					flex: 1 0 auto;
+				}
+
+				i {
+					@include set_dynamic(width, 20px, 28px, 35px);
+					@include set_desktop(display, none);
+					font-size: 1.5em;
+				}
+			}
 	
-				.hours {
-					.hour {
-						height: 80px;
-						margin-top: 12px;
-		
-						color: white;
-						font-family: ubuntu_condensed;
-						font-size: 17px;
-		
-						display: flex;
-						align-items: flex-start;
-						justify-content: flex-start;
-					}
+			.extraspace {
+				@include set_dynamic(margin-left, 6px, 8px, 10px);
+			}
+
+			.building_title {
+				&.span1	{ grid-column-end: span 1; }
+				&.span2	{ grid-column-end: span 2; }
+				&.span3	{ grid-column-end: span 3; }
+				&.span4	{ grid-column-end: span 4; }
+				&.span5	{ grid-column-end: span 5; }
+				&.span6	{ grid-column-end: span 6; }
+				&.span7	{ grid-column-end: span 7; }
+				&.span8	{ grid-column-end: span 8; }
+				&.span9	{ grid-column-end: span 9; }
+				&.span10{ grid-column-end: span 10;}
+
+				@include set_dynamic(margin-top, 3px, 5px, 6px);
+				@include set_dynamic(height, 20px, 28px, 35px);
+
+				background: $colorPastelGrey2;
+				color: white;
+				font-family: ubuntu_condensed;
+				@include set_dynamic(font-size, 11px, 16px, 22px);
+				white-space: nowrap;
+
+				@include auto_pos;
+			}
+								
+			.room {
+				@include set_dynamic(min-width, null, 91px, 115px);
+				@include set_dynamic(height, 20px, 28px, 35px);
+				@include set_dynamic(margin-bottom, -4px, 8px, 10px);
+				
+				background: white;
+				color: black;
+				font-family: ubuntu_condensed;
+				@include set_dynamic(font-size, 11px, 16px, 22px);
+				white-space: nowrap;
+
+				@include auto_pos;
+			}
+
+			.hourbox {
+
+				position: relative;
+
+				.hour {
+					position: absolute;
+					@include set_dynamic(left, null, -60px, -75px);
+					@include set_dynamic(width, null, 47px, 65px);
+					@include set_mobile(top, -11px);
+					@include set_mobile(height, 10px);
+
+					background: none;
+					color: white;
+					font-family: ubuntu_condensed;
+					@include set_dynamic(font-size, 9px, 12px, 17px);
+
+					@include auto_pos($h_align: flex-end);
 				}
 			}
 			
-			.collector_data {
-	
-				.weekdaybox {
-					height: 35px;
-					background: #997B3C;
-		
-					color: white;
-					font-family: ubuntu;
-					font-weight: 600;
-					font-size: 22px;
-					text-align: center;
-		
-					display: flex;
-					align-items: center;
-					justify-content: center;
-				}
-	
-				.collector_buildings {
-	
-					display: grid;
-					grid-column-gap: 16px;
-					grid-auto-flow: column;
-	
-					.buildingbox {
-	
-						.building_title {
-							margin-top: 6px;
-							height: 35px;
-							background: #DECDB3;
-							
-							color: black;
-							font-family: ubuntu_condensed;
-							font-size: 22px;
-							text-align: center;
-							line-height: 35px;
-		
-							display: flex;
-							align-items: center;
-							justify-content: center;
-						}
-	
-						.collector_rooms {
-	
-							display: grid;
-							grid-column-gap: 6px;
-							grid-auto-flow: column;
-							
-							.roombox {
-								width: 115px;
-								
-								.room {
-									height: 35px;
-									margin-bottom: 22px;
-									background: white;
-									
-									color: black;
-									font-family: ubuntu_condensed;
-									font-size: 22px;
-									text-align: center;
-		
-									display: flex;
-									align-items: center;
-									justify-content: center;
-								}
-								
-								.nocourse {
-									margin-top: 12px;
-									height: 80px;
-									background: white;
+			.nocourse, .course {
+				@include set_dynamic(margin-top, 17px, 10px, 12px);
+				@include set_dynamic(height, 46px, 64px, 80px);
 				
-									color: black;
-									font-family: ubuntu_condensed;
-									font-size: 17px;
-									text-align: center;
-									line-height: 20px;
-		
-									display: flex;
-									align-items: center;
-									justify-content: center;
-								}
+				background: white;
+			}
 								
-								.course {
-									margin-top: 12px;
-									background: white;
-									cursor: pointer;
-		
-									position: relative;
-	
-									.course_hidden {
-										margin-top: 12px;
-										height: 80px;
-										background: white;
+			.course {
 
-										display: none;
-									}
+				position: relative;
 
-									&.hidden {
-										.course_hidden {
-											display: block;
-										}
-										.course_data, .course_details {
-											display: none;
-										}
-									}
+				.course_hidden {
+					height: 100%;
+					background: white;
+					display: none;
+				}
 
-									.course_data {
-										height: 80px;
-										color: black;
-										font-family: ubuntu_condensed;
-										font-size: 17px;
-										text-align: center;
-										line-height: 20px;
-		
-										display: flex;
-										align-items: center;
-										justify-content: center;
-		
-										position: relative;
-										overflow: hidden;
-	
-										.full, .beginners {
-											width: 36px;
-											height: 36px;
-											border: 1px solid black;
-	
-											position: absolute;
-											z-index: 3;
-											left: -23px;
-											top: -23px;
-											-webkit-transform: rotate(45deg);
-											-moz-transform: rotate(45deg);
-											-o-transform: rotate(45deg);
-											-ms-transform: rotate(45deg);
-											transform: rotate(45deg);
-										}
-	
-										.full {
-											background: #FF0000;
-										}
-	
-										.beginners {
-											background: #82AB12;
-										}
-									}
-	
-									.course_details {
-										width: 141px;
-										height: 116px;
-										background: #54CDFF;
-			
-										color: black;
-										font-family: ubuntu_condensed;
-										font-size: 17px;
-										text-align: center;
-										line-height: 20px;
-	
-										position: absolute;
-										z-index: 4;
-										left: -13px;
-										top: -18px;
-										display: none;
-										align-items: center;
-										justify-content: center;
-									}
-	
-									.visible {
-										display: flex;
-									}
-								}
-							}
-						}
+				&.hidden {
+					.course_hidden {
+						display: block;
 					}
+					.course_data, .course_details {
+						display: none;
+					}
+				}
+
+				&.show_details:not(.hidden) {
+					.course_details {
+						@include auto_pos;
+					}
+				}
+
+				.course_data {
+					height: 100%;
+					cursor: pointer;
+
+					color: black;
+					font-family: ubuntu_condensed;
+					@include set_dynamic(font-size, 10px, 12px, 17px);
+					line-height: 115%;
+					text-align: center;
+
+					@include auto_pos;
+
+					position: relative;
+					overflow: hidden;
+
+					.full, .beginners {
+						width: 36px;
+						height: 36px;
+						border: 1px solid black;
+
+						position: absolute;
+						z-index: 3;
+						@include set_dynamic(left, -25px, -22px, -20px);
+						@include set_dynamic(top, -25px, -22px, -20px);
+						-webkit-transform: rotate(45deg);
+						-moz-transform: rotate(45deg);
+						-o-transform: rotate(45deg);
+						-ms-transform: rotate(45deg);
+						transform: rotate(45deg);
+					}
+
+					.full {
+						background: $colorRed;
+					}
+
+					.beginners {
+						background: $colorGreen;
+					}
+				}
+
+				.course_details {
+					width: 122%;
+					@include set_dynamic(height, 68px, 94px, 116px);
+					cursor: pointer;
+
+					background: $colorBlue;
+					color: black;
+					font-family: ubuntu_condensed;
+					@include set_dynamic(font-size, 10px, 12px, 17px);
+					line-height: 115%;
+					text-align: center;
+					white-space: nowrap;
+
+					position: absolute;
+					z-index: 4;
+					left: -11%;
+					@include set_dynamic(top, -11px, -15px, -18px);
+
+					@include auto_pos($invisible: true);
 				}
 			}
 		}
@@ -361,32 +359,23 @@
 }
 
 .timetable_prices {
-	//------- dynamic properties -------//
 	@include set_dynamic(margin, 80px 0px 0px 0px, 33px 0px 0px 0px, 53px 0px 0px 0px);
-	// margin: 0px 0px 43px 0px;
-	//----------------------------------//
 	background: none;
 
 	display: flex;
 	flex-flow: column nowrap;
 	justify-content: flex-start;
 	align-items: stretch;
-	
+
 	.range1:not(.range_price) {
-		//------- dynamic properties -------//
 		@include set_mobile(margin, 0px 19px, 0px);
-		// margin: 0px -6px 0px 0px;
-		//----------------------------------//
 		width: 100%;
 
 		.ce_headline {
-			//------- dynamic properties -------//
 			@include set_dynamic(padding, 0px 0px 22px 0px, 0px 0px 19px 0px, 0px 0px 53px 0px);
-			// margin: 0px 0px 43px 0px;
-			@include set_dynamic(font-size, 22px, 22px, 36px);
-			// font-size: 2.4rem;
-			//----------------------------------//
 
+			font-family: barnastencil;
+			@include set_dynamic(font-size, 22px, 22px, 36px);
 			font-weight: bold;
 			line-height: 115%;
 			text-transform: uppercase;
@@ -394,10 +383,7 @@
 	}
 
 	.range_price {
-		//------- dynamic properties -------//
 		@include set_dynamic(margin, 0px -4px 0px 0px, 0px -3px 0px 0px, 0px -6px 0px 0px);
-		// margin: 0px -6px 0px 0px;
-		//----------------------------------//
 
 		display: flex;
 		flex-flow: row wrap;
@@ -405,35 +391,24 @@
 		align-content: flex-start;
 
 		.ce_text {
-			//------- dynamic properties -------//
 			@include set_dynamic(flex, 1 0 35%, 1 0 23%, 1 0 18%);
-			// flex: 1 0 170px;
-			// min-width: 170px;
 			@include set_dynamic(margin, 0px 4px 4px 0px, 0px 3px 3px 0px, 0px 6px 6px 0px);
-			// margin: 0px 6px 6px 0px;
 			@include set_dynamic(padding, 23px 6px, 21px 4px, 34px 6px);
-			// padding: 35px 0px;
-			//----------------------------------//
 
+			background: $colorGrey2;
 			overflow: hidden;
 
 			@include auto_pos($v_align: flex-start);
 
 			h1, h2 {
-				//------- dynamic properties -------//
 				@include set_dynamic(margin, 0px 0px 11px 0px, 0px 0px 9px 0px, 0px 0px 15px 0px);
-				// margin: 0px 0px 15px 0px
 				@include set_dynamic(width, 70px, 64px, 106px);
-				// width: 106px
 				@include set_dynamic(height, 70px, 64px, 106px);
-				// height: 106px
 				@include set_dynamic(border-radius, 35px, 32px, 53px);
-				// border-radius: 53px
-				@include set_dynamic(font-size, 16px, 15px, 30px);
-				// font-size: 1.9rem;
-				//----------------------------------//
 
+				color: $colorGrey2;
 				background: white;
+				@include set_dynamic(font-size, 16px, 15px, 30px);
 				font-weight: 600;
 				text-align: center;
 				white-space: nowrap;
@@ -442,14 +417,10 @@
 			}
 
 			p {
-				//------- dynamic properties -------//
 				@include set_dynamic(margin, 3px 0px, 2px 0px, 5px 0px);
-				// margin: 5px 0px 5px 0px;
-				@include set_dynamic(font-size, 16px, 15px, 22px);
-				// font-size: 1.4rem;
-				//----------------------------------//
 
 				color: white;
+				@include set_dynamic(font-size, 16px, 15px, 22px);
 				font-weight: normal;
 				line-height: 135%;
 				text-align: center;
@@ -458,40 +429,25 @@
 	}
 
 	.range_price + .some_range {
-		//------- dynamic properties -------//
 		@include set_dynamic(margin, 0px -4px 0px 0px, 0px -3px 0px 0px, 0px -6px 0px 0px);
-		// margin: 0px -6px 0px 0px;
 		@include set_mobile(flex-flow, column nowrap, row wrap);
-		// flex-flow: row wrap;
-		//----------------------------------//
 
 		display: flex;
 		align-items: stretch;
-		// align-content: flex-start;
 
 		.ce_text {
-			//------- dynamic properties -------//
 			@include set_mobile(flex, null, 1 0 35%);
-			// flex: 1 0 340px;
 			@include set_dynamic(margin, 0px 4px 4px 0px, 0px 3px 3px 0px, 0px 6px 6px 0px);
-			// margin: 0px 6px 6px 0px;
 			@include set_dynamic(padding, 19px, 19px, 35px 50px);
-			// padding: 20px 40px;
-			//----------------------------------//
-			background: $colorGray;
+
+			background: $colorGrey2;
 
 			@include auto_pos($item_order: row, $h_align: flex-start, $v_align: flex-start);
-			// display: flex;
-			// flex-flow: row nowrap;
-			// align-items: flex-start;
 
 			p {
-				//------- dynamic properties -------//
-				@include set_dynamic(font-size, 14px, 12px, 22px);
-				// font-size: 1.4rem;
-				//----------------------------------//
 				margin: 0px;
 
+				@include set_dynamic(font-size, 14px, 12px, 22px);
 				font-weight: normal;
 				line-height: 165%;
 				text-align: left;

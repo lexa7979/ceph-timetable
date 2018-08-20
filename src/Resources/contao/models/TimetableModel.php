@@ -27,7 +27,7 @@ class TimetableModel extends Model {
 
 		$rooms_data = $objDatabase->execute("SELECT r.id AS room_id, r.roomnumber AS roomnumber, s.name AS sitename FROM tl_timetable_rooms r INNER JOIN tl_timetable_sites s ON r.pid = s.id ORDER BY s.sorting, r.sorting")->fetchAllAssoc();
 		$courses_data = $objDatabase->execute("SELECT c.*, t.name AS teacher_name, s.id AS style_id, s.name AS style_name, s.background AS background FROM tl_timetable c JOIN tl_timetable_teachers t ON c.teacher = t.id JOIN tl_timetable_styles s ON c.style = s.id")->fetchAllAssoc();
-		$styles_data = $objDatabase->execute("SELECT s.id AS id, s.name AS name FROM tl_timetable_styles s ORDER BY s.name")->fetchAllAssoc();
+		$styles_data = $objDatabase->execute("SELECT s.id AS id, s.name AS name, s.filter_name AS filter_name FROM tl_timetable_styles s ORDER BY s.name")->fetchAllAssoc();
 
 		// Get the range of weekdays and range of times in which courses take place:
 		$range_data = $objDatabase->execute("SELECT MIN(weekday) AS w_min, MAX(weekday) AS w_max, MIN(time) AS t_min, MAX(time) AS t_max FROM tl_timetable")->row();
@@ -42,6 +42,22 @@ class TimetableModel extends Model {
 				$rooms_data[$k]['count'] = $c['c'];
 				break;
 			}
+		}
+
+		// Process styles and prepare suitable data for filtering:
+		$styles_filter_data = array();	// new filter-ID => caption
+		$styles_filter_map = array();	// style-ID => new filter-ID
+		foreach ($styles_data as $record) {
+			// Get current filter-caption:
+			$filter_name = ($record['filter_name'] != '') ? $record['filter_name'] : $record['name'];
+			// Create new filter-ID for current filter-caption only, if it hasn't appeared before:
+			$filter_id = array_search($filter_name, $styles_filter_data);
+			if ($filter_id === FALSE) {
+				$styles_filter_data[] = $filter_name;
+				$filter_id = key($styles_filter_data);
+			}
+			// Connect found filter-ID with current style-ID:
+			$styles_filter_map[$record['id']] = $filter_id;
 		}
 
 		// Prepare first level of timetable - weekdays:
@@ -71,7 +87,7 @@ class TimetableModel extends Model {
 								'end'				=> [floor($end / 60), $end % 60],
 								'teacher'			=> $c['teacher_name'],
 								'style'				=> $c['style_name'],
-								'style_id'			=> $c['style_id'],
+								'style_id'			=> $styles_filter_map[$c['style_id']],
 								'background'		=> $c['background'],
 								'description'		=> $c['description'],
 								'ages'				=> $c['ages'],
@@ -90,7 +106,7 @@ class TimetableModel extends Model {
 		return [
 			'timetable' => $timetable,
 			'courses'	=> $courses_data,
-			'styles'	=> $styles_data,
+			'styles'	=> $styles_filter_data,	//$styles_data,
 			'lang'		=> $GLOBALS['TL_LANG']['tl_timetable'],
 		];
 	}

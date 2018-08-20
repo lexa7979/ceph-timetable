@@ -26,6 +26,16 @@ $GLOBALS['TL_DCA']['tl_timetable_styles'] = [
 			'eval'			=> ['mandatory' => true, 'maxlength' => 255],
 			'sql'			=> "varchar(255) NOT NULL default ''",
 		],
+		'filter_name' => [
+			'label'			=> &$GLOBALS['TL_LANG']['tl_timetable_styles']['filter_name'],
+			'exclude'		=> true,
+			'search'		=> true,
+			'sorting'		=> true,
+			'flag'			=> 1,
+			'inputType'		=> 'text',
+			'eval'			=> ['mandatory' => false, 'maxlength' => 255, 'tl_class' => 'w50'],
+			'sql'			=> "varchar(255) NOT NULL default ''",
+		],
 		'background'=> [
 			'label'			=> &$GLOBALS['TL_LANG']['tl_timetable_styles']['background'],
 			'exclude'		=> true,
@@ -33,7 +43,7 @@ $GLOBALS['TL_DCA']['tl_timetable_styles'] = [
 			'sorting'		=> true,
 			'flag'			=> 1,
 			'inputType'		=> 'text',
-			'eval'			=> ['minlength' => 6, 'colorpicker' => true],
+			'eval'			=> ['minlength' => 6, 'colorpicker' => true, 'tl_class' => 'w50'],
 			'sql'			=> "varchar(6) NOT NULL DEFAULT '000000'",
 		],
 		'tstamp'	=> [
@@ -85,6 +95,6 @@ $GLOBALS['TL_DCA']['tl_timetable_styles'] = [
 
 	'palettes'	=> [
 		'__selector__'		=> [],
-		'default'			=> 'name,background'
+		'default'			=> 'name,filter_name,background'
 	],
 ];
