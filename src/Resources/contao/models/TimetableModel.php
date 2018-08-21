@@ -54,7 +54,7 @@ class TimetableModel extends Model {
 			$filter_id = array_search($filter_name, $styles_filter_data);
 			if ($filter_id === FALSE) {
 				$styles_filter_data[] = $filter_name;
-				$filter_id = key($styles_filter_data);
+				$filter_id = array_search($filter_name, $styles_filter_data);
 			}
 			// Connect found filter-ID with current style-ID:
 			$styles_filter_map[$record['id']] = $filter_id;
