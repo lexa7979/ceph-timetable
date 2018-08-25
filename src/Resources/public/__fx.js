@@ -1,20 +1,46 @@
-
+/***
+ * Functions to handle timetable
+ ***/
 var timetable_refreshHours = function() {
-	$('.hours').show();
+	$('.hour').show();
 	var min = 10000;
-	$('.hours').each(function() {
-		var left = $(this).position().left;
+	$('.hour').each(function() {
+		var left = $(this).offset().left;
 		min = (left < min) ? left : min;
 	});
-	$('.hours').each(function () {
-		$(this).toggle($(this).position().left < min + 20);
+	$('.hour').each(function () {
+		$(this).toggle($(this).offset().left < min + 20);
 	});
 };
 
-var timetable_toggleDetails = function(id) {
-	if (! $('#course_details' + id).hasClass('visible'))
-		$('.course_details').removeClass('visible');
-	$('#course_details' + id).toggleClass('visible');	
+var timetable_toggleDetails = function(id, action = 'toggle') {
+
+	switch (action) {
+
+		default:
+		case 'toggle':
+			var already_active = $('#course_data' + id).hasClass('show_details');
+			document_hideDynamicElements();
+			if (! already_active && ! $('#course_data' + id).hasClass('hidden'))
+				$('#course_data' + id).addClass('show_details');
+			break;
+
+		case 'show':
+			if (! $('#course_data' + id).hasClass('hidden'))
+				$('#course_data' + id).addClass('show_details');
+			break;
+
+		case 'hide':
+			if (! $('#course_data' + id).hasClass('hidden'))
+				$('#course_data' + id).removeClass('show_details');
+			break;
+	}
+
+	// if (! $('#course_data' + id).hasClass('hidden')) {
+	// 	if (! $('#course_data' + id).hasClass('show_details'))
+	// 		$('.course').removeClass('show_details');
+	// 	$('#course_data' + id).toggleClass('show_details');
+	// }
 };
 
 var timetable_applyFilter = function() {
@@ -34,8 +60,8 @@ var timetable_applyFilter = function() {
 	}
 	else {
 		$('.mod_timetableview .course').each(function (i, el_course) {
-			// Determine the filter-groups the current course belongs to:
-			var filter_array = $(el_course).attr('contao-filter').split(';');
+			// Determine the filter-groups that the current course belongs to:
+			var filter_array = $(el_course).attr('data-filter').split(';');
 													// e.g. ['style:1', 'audience:2,3']
 			var styles = filter_array.reduce(function (result, value) {
 				var option = value.split(':');		// e.g. ['style', '1']
@@ -49,7 +75,7 @@ var timetable_applyFilter = function() {
 					return option[1].split(',');	// e.g. ['2', '3']
 				return result;
 			}, null);
-			// Determine if the current course matches the current filters:
+			// Determine if the current course fits to the current filters:
 			var style_fits = (! ('styles' in current_filters) || current_filters['styles'].filter(value => styles.indexOf(value) !== -1).length > 0);
 			var audience_fits = (! ('audiences' in current_filters) || current_filters['audiences'].filter(value => audiences.indexOf(value) !== -1).length > 0);
 			$(el_course).toggleClass('hidden', ! style_fits || ! audience_fits);
@@ -61,26 +87,25 @@ var timetable_applyFilter = function() {
 	}
 	else {
 		$('.mod_timetableview .daybox').each(function (i, el_daybox) {
-			var weekday = $(el_daybox).attr('contao-filter').split(':')[1];
+			var weekday = $(el_daybox).attr('data-filter').split(':')[1];
 			var weekday_fits = (current_filters.weekdays.indexOf(weekday) !== -1);
 			$(el_daybox).toggleClass('hidden', ! weekday_fits);
 		});
 	}
-}
+};
+/***/
 
 
 var document_prepare = function() {
 
 	if ($('.mod_timetableview').length > 0)
 		timetable_refreshHours();
-
 }
 
 var document_refresh = function() {
 
 	if ($('.mod_timetableview').length > 0)
 		timetable_refreshHours();
-
 };
 
 $(document).ready(document_prepare);

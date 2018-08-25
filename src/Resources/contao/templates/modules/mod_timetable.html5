@@ -15,9 +15,28 @@
 							endforeach;	?>	
 		</div>
 		<div class="filter_group styles"><?php
-							$styles_cache = array();
-							foreach ($this->styles as $key => $value):	?>	
-			<label><input type="checkbox" name="styles" value="<?= $key ?>"/>&nbsp;&nbsp;<?= $value ?></label><?php
+							// Firstly insert style-filters of the following list, if present:
+							$styles_list = array(
+								'style_early_dance_training'
+													=> 'Tänz. Früherziehung',
+								'style_ballet'		=> 'Ballett',
+								'style_jazz'		=> 'Jazz',
+								'style_hiphop'		=> 'HipHop',
+								'style_contemporary'=> 'Contemporary',
+								'style_breakdance'	=> 'Breakdance',
+								'style_popping'		=> 'Popping'
+							);
+							foreach ($styles_list as $class => $filter):
+								$key = array_search($filter, $this->styles);
+								if ($key === FALSE)
+									continue;	?>	
+			<label class="<?= $class ?>"><input type="checkbox" name="styles" value="<?= $key ?>"/>&nbsp;&nbsp;<?= $filter ?></label><?php
+							endforeach;
+							// Insert any other style-filters, now:
+							foreach ($this->styles as $key => $value):
+								if ($value === 'hidden' || array_search($value, $styles_list) !== FALSE)
+									continue;	?>	
+			<label class="style_other"><input type="checkbox" name="styles" value="<?= $key ?>"/>&nbsp;&nbsp;<?= $value ?></label><?php
 							endforeach;	?>	
 		</div>
 		<div class="filter_group weekdays"><?php
@@ -72,8 +91,9 @@
 											$extra_class = ($times_printed) ? '' : ' hourbox';
 											$extra_div = ($times_printed) ? '' : '<div class="hour">' . sprintf($this->lang['format_frontend_time1'], $hour) . '</div>';
 											if (is_array($c)):
-												$icon = ($c['is_fullybooked']) ? '<div class="full"></div>' :
-															(($c['is_forbeginners']) ? '<div class="beginners"></div>' : '');
+												// $icon = ($c['is_fullybooked']) ? '<div class="full"></div>' :
+												// 			(($c['is_forbeginners']) ? '<div class="beginners"></div>' : '');
+												$icon = ($c['is_forbeginners']) ? '<div class="beginners"></div>' : '';
 												$back = ($c['background']) ? " style=\"background: #{$c['background']}\"" : '';
 												$filter = "style:{$c['style_id']};audience:{$c['audience']}";	?>	
 		<div class="course<?= $extra_class ?><?= $extra_space ?>" id="course_data<?= $c['array-key'] ?>"<?= $back; ?> data-filter="<?= $filter; ?>"><?php
@@ -81,8 +101,8 @@
 			<div class="hour"><?= sprintf($this->lang['format_frontend_time1'], $hour) ?></div><?php
 												endif;	?>	
 			<div class="course_hidden"></div>
-			<div class="course_data" onclick="timetable_toggleDetails(<?= $c['array-key']; ?>);"><?= $icon ?><?= $c['style'] ?><br/><?= $c['description'] ?><br/><?= $c['ages'] ?><br/></div>
-			<div class="course_details" onclick="timetable_toggleDetails(<?= $c['array-key']; ?>);"><?= sprintf($this->lang['format_frontend_time2'], $c['start'][0], $c['start'][1], $c['end'][0], $c['end'][1]); ?><br/><?= $c['style'] ?><br/><?= $c['description'] ?><br/><?= $c['ages'] ?><br/><?= $c['teacher'] ?><br/></div>
+			<div class="course_data" onmouseenter="timetable_toggleDetails(<?= $c['array-key']; ?>, 'show');"><?= $icon ?><?= $c['style'] ?><br/><?= $c['description'] ?><br/><?= $c['ages'] ?><br/></div>
+			<div class="course_details" onmouseleave="timetable_toggleDetails(<?= $c['array-key']; ?>, 'hide');"><?= sprintf($this->lang['format_frontend_time2'], $c['start'][0], $c['start'][1], $c['end'][0], $c['end'][1]); ?><br/><?= $c['style'] ?><br/><?= $c['description'] ?><br/><?= $c['ages'] ?><br/><?= $c['teacher'] ?><br/></div>
 		</div><?php
 											else:	?>	
 		<div class="nocourse<?= $extra_class ?><?= $extra_space ?>"><?= $extra_div ?></div><?php

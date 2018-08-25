@@ -97,6 +97,10 @@
 					white-space: nowrap;
 
 					@include auto_pos($item_order: row, $h_align: flex-start);
+
+					&.style_early_dance_training {
+						color: #d9d;
+					}
 				}
 
 				label:last-child {
