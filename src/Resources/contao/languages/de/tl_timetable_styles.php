@@ -14,7 +14,7 @@ $items = [
 	'id'			=> ['Datensatznummer',		'ID des Datensatzes'],
 	'tstamp'		=> ['Änderungsdatum',		'Datum und Uhrzeit der letzten Änderung'],
 	'name'			=> ['Bezeichnung',			'Wie heißt der Tanzstil?'],
-	'filter_name'	=> ['Stichwort',			'Hier können Sie eine alternative Bezeichnung angeben, welche für den Kursplan-Filter genutzt werden soll.'],
+	'filter_name'	=> ['Filter',				'Wenn dieser Tanzstil mit einem Filter verknüpft werden soll, geben Sie hier das passende Stichwort an (z.B. "Tänz. Früherziehung", "Ballett", "Jazz", "HipHop", "Contemporary", "Breakdance" oder "Popping").'],
 	'background'	=> ['Hintergrundfarbe',		'Geben den RBG-Code der Hintergrundfarbe an (z.B. "00FF00" für grün), die im Kursplan für diesen Tanzstil genutzt werden soll.'],
 ];
 

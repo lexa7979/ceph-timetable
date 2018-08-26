@@ -51,14 +51,15 @@ class TimetableModel extends Model {
 		foreach ($styles_data as $record) {
 			// Ensure that there actually are courses which use the current style:
 			$skip = true;
-			foreach ($styles_count as $o) if ($o['style_id'] == $record['id'] && $o['n_courses'] > 0) {
-				$skip = false;
-				break;
+			foreach ($styles_count as $o) {
+				if ($o['style_id'] == $record['id'] && $o['n_courses'] > 0) {
+					$skip = false;
+					break;
+				}
 			}
 			if ($skip)
 				continue;
 			// Get current filter-caption:
-			// $filter_name = ($record['filter_name'] != '') ? $record['filter_name'] : $record['name'];
 			$filter_name = $record['filter_name'];
 			// Ensure that a filter-caption was given:
 			if ($filter_name == '') {
