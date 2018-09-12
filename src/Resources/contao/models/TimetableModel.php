@@ -86,7 +86,7 @@ class TimetableModel extends Model {
 			foreach ($rooms_data as $r) if ($r['count'] > 0) {
 				$sn = $r['sitename'];
 				$rn = $r['roomnumber'];
-				if (! is_array[$timetable[$wd][$sn]])
+				if (! is_array($timetable[$wd][$sn]))
 					$timetable[$wd][$sn] = [];
 				$timetable[$wd][$sn][$rn] = [];
 				// Prepare third level of timetable - times:
@@ -107,7 +107,7 @@ class TimetableModel extends Model {
 								'background'		=> $c['background'],
 								'description'		=> $c['description'],
 								'ages'				=> $c['ages'],
-								'audience'			=> implode(',', unserialize($c['audience'])),
+								'audience'			=> ($c['audience']) ? implode(',', unserialize($c['audience'])) : '',
 								'is_forbeginners'	=> ($c['is_forbeginners'] == 1),
 								'is_fullybooked'	=> ($c['is_fullybooked'] == 1),
 							];
