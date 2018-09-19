@@ -15,7 +15,9 @@ class TimetableBackend extends Backend {
 
 		$start = floor($arrRow['time'] / 60);
 		$end = $start + $arrRow['duration'];
-		$hour = floor($start / 60);
+		// $hour = floor($start / 60);
+		$mid = floor(($start + $end) / 2);
+		$hour = floor($mid / 60);
 
 		$problems = array();
 
@@ -25,13 +27,16 @@ class TimetableBackend extends Backend {
 		while ($row = $data->next()) {
 			$start2 = floor($row->time / 60);
 			$end2 = $start2 + $row->duration;
+			$mid2 = floor(($start2 + $end2) / 2);
 			if (($start2 > $start && $start2 < $end) || ($start2 == $start) || ($start2 < $start && $end2 > $start)) {
 				$problems[] = ['error', 'error_collision'];
-				if (floor($start2 / 60) == $hour)
+				if (floor($mid2 / 60) == $hour)
+				// if (floor($start2 / 60) == $hour)
 					$problems[] = ['error', 'error_collision2'];
 				break;
 			}
-			if (floor($start2 / 60) == $hour) {
+			if (floor($mid2 / 60) == $hour) {
+			// if (floor($start2 / 60) == $hour) {
 				$problems[] = ['error', 'error_collision2'];
 				break;
 			}
@@ -71,7 +76,7 @@ class TimetableBackend extends Backend {
 
 		$s = [
 			// 0 => $GLOBALS['TL_LANG']['tl_timetable']['time'][0],
-			1 => sprintf("%02d:%02d", floor($arrRow['time'] / 3600), floor(($arrRow['time'] % 3600) / 60)),
+			// 1 => sprintf("%02d:%02d", floor($arrRow['time'] / 3600), floor(($arrRow['time'] % 3600) / 60)),
 			2 => $GLOBALS['TL_LANG']['tl_timetable']['room'][0] . ' ' . $refTitle['room'],
 			3 => $GLOBALS['TL_LANG']['tl_timetable']['site'][0] . ' ' . $refTitle['site'],
 			4 => $refTitle['style'],	//$styledata->name,
@@ -80,6 +85,8 @@ class TimetableBackend extends Backend {
 			7 => ($arrRow['ages'] == '') ? $GLOBALS['TL_LANG']['tl_timetable']['no_ages'][0] : $arrRow['ages'],
 			8 => $GLOBALS['TL_LANG']['tl_timetable']['is_forbeginners_switch'][($arrRow['is_forbeginners'] == 1) ? 1 : 0],
 			9 => $GLOBALS['TL_LANG']['tl_timetable']['is_fullybooked_switch'][($arrRow['is_fullybooked'] == 1) ? 1 : 0],
+			10 => sprintf($GLOBALS['TL_LANG']['tl_timetable']['format_frontend_time1'], floor($mid / 60)),
+			11 => sprintf($GLOBALS['TL_LANG']['tl_timetable']['format_frontend_time2'], floor($start / 60), $start % 60, floor($end / 60), $end % 60),
 		];
 		foreach ($s as $k => $v)
 			$s[$k] = trim($v);
@@ -93,7 +100,7 @@ class TimetableBackend extends Backend {
 		}
 
 		return <<<EOT
-$s_problem<h2>$s[1]</h2>
+$s_problem<div><span style="font-weight: bold; font-size: 1.25em">$s[11] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>($s[10])</div>
 <div style="margin-left: 30px">$s[2] ($s[3]): $s[4] ($s[5])</div>
 <div style="margin-left: 30px">$s[6], $s[7] ($s[8], $s[9])</div>
 EOT;

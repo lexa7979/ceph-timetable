@@ -31,7 +31,7 @@ class TimetableModel extends Model {
 		$styles_count = $objDatabase->execute("SELECT c.style AS style_id, COUNT(c.id) AS n_courses FROM tl_timetable c GROUP BY c.style")->fetchAllAssoc();
 
 		// Get the range of weekdays and range of times in which courses take place:
-		$range_data = $objDatabase->execute("SELECT MIN(time) AS t_min, MAX(time) AS t_max FROM tl_timetable")->row();
+		$range_data = $objDatabase->execute("SELECT MIN(time) AS t_min, MAX(time+duration*60) AS t_max FROM tl_timetable")->row();
 		$range_data['t_min'] = floor($range_data['t_min'] / 3600);
 		$range_data['t_max'] = floor($range_data['t_max'] / 3600);
 
@@ -95,8 +95,11 @@ class TimetableModel extends Model {
 					$timetable[$wd][$sn][$rn][$ti] = null;
 					foreach ($courses_data as $k => $c) {
 						$start = floor($c['time'] / 60);
-						if (floor($start / 60) == $ti && $c['weekday'] == $wd && $c['room'] == $r['room_id']) {
-							$end = floor($c['time'] / 60) + $c['duration'];
+						$end = $start + $c['duration'];
+						$mid = floor(($start + $end) / 2);
+						if (floor($mid / 60) == $ti && $c['weekday'] == $wd && $c['room'] == $r['room_id']) {
+						// if (floor($start / 60) == $ti && $c['weekday'] == $wd && $c['room'] == $r['room_id']) {
+						// 	$end = floor($c['time'] / 60) + $c['duration'];
 							$timetable[$wd][$sn][$rn][$ti] = [
 								'array-key'			=> $k,
 								'start'				=> [floor($start / 60), $start % 60],
@@ -117,11 +120,31 @@ class TimetableModel extends Model {
 			}
 		}
 
+		// Determine for every weekday which lines of the 
+		$weekdays = [];
+		for ($wd = 0; $wd <= 5; $wd++) {
+			$ti_min = null;
+			$ti_max = null;
+			foreach (array_keys($timetable[$wd]) as $sn) {
+				foreach (array_keys($timetable[$wd][$sn]) as $rn) {
+					foreach ($timetable[$wd][$sn][$rn] as $ti => $course) {
+						if (is_array($course)) {
+							$ti_min = ($ti_min === null || $ti < $ti_min) ? $ti : $ti_min;
+							$ti_max = ($ti_max === null || $ti > $ti_max) ? $ti : $ti_max;
+						}
+					}
+				}
+			}
+			if ($ti_min !== null)
+				$weekdays[$wd] = [$ti_min, $ti_max];
+		}
+
 		\System::loadLanguageFile('tl_timetable');
 
 		return [
 			'timetable' => $timetable,
 			'courses'	=> $courses_data,
+			'weekdays'	=> $weekdays,
 			'styles'	=> $styles_filter_data,	//$styles_data,
 			'lang'		=> $GLOBALS['TL_LANG']['tl_timetable'],
 		];

@@ -15,7 +15,8 @@
 	.filter {
 
 		.filter_header {
-			@include set_dynamic(margin, 16px 0px 0px 0px, 23px 0px 0px 0px, 28px 75px 0px 75px);
+			// @include set_dynamic(margin, 16px 0px 0px 0px, 23px 0px 0px 0px, 28px 75px 0px 75px);
+			@include set_dynamic(margin, 28px 0px 0px 0px, 37px 0px 0px 0px, 75px 75px 0px 75px);
 			@include set_dynamic(height, 30px, 29px, 45px);
 
 			background: $colorGrey2;
@@ -42,7 +43,8 @@
 
 				color: white;
 				@include set_dynamic(font-size, 14px, 14px, 25px);
-				cursor: pointer;
+				// cursor: pointer;
+				text-decoration: none;
 
 				@include auto_pos($item_order: row);
 
@@ -97,10 +99,6 @@
 					white-space: nowrap;
 
 					@include auto_pos($item_order: row, $h_align: flex-start);
-
-					&.style_early_dance_training {
-						color: #d9d;
-					}
 				}
 
 				label:last-child {
@@ -147,7 +145,7 @@
 				background: $colorRed;
 			}
 			.beginners .icon {
-				background: $colorGreen;
+				background: #018238;
 			}
 		}
 	}
@@ -155,25 +153,48 @@
 	.data {
 		@include set_dynamic(margin-right, null, 60px, 75px);
 		display: flex;
-		@include set_mobile(flex-flow, column nowrap, row wrap);
-		@include set_dynamic(justify-content, null, space-evenly, space-evenly);
+		// @include set_mobile(flex-flow, column nowrap, row wrap);
+		flex-flow: row wrap;
+		// @include set_dynamic(justify-content, null, space-evenly, space-evenly);
+		justify-content: space-evenly;
+		align-items: flex-start;
 
 		.daybox {
+
+			// Hide hours of dayboxes with neighbours on their left side:
+			&.multiple_box:not(.multiple_box_first) {
+				.hourbox .hour {
+					display: none;
+				}
+			}
+
+			// Hide empty lines:
+			&.single_box {
+				.empty_early, .empty_late {
+					display: none;
+				}
+			}
+			&.multiple_box {
+				.multiple_box_empty {
+					display: none;
+				}
+			}
+
 			flex: 0 0 auto;
 			@include set_dynamic(margin, 24px 10px 0px 10px, 34px 0px 0px 60px, 38px 0px 0px 75px);
 
 			display: grid;
 			&.width0	{ display: none; }
 			&.width1	{ grid-template-columns: 100%;				.weekday_title { grid-column: 1 / span 1; } }
-			&.width2	{ grid-template-columns: repeat(2, 1fr);	.weekday_title { grid-column: 1 / span 2; } }
-			&.width3	{ grid-template-columns: repeat(3, 1fr);	.weekday_title { grid-column: 1 / span 3; } }
-			&.width4	{ grid-template-columns: repeat(4, 1fr);	.weekday_title { grid-column: 1 / span 4; } }
-			&.width5	{ grid-template-columns: repeat(5, 1fr);	.weekday_title { grid-column: 1 / span 5; } }
-			&.width6	{ grid-template-columns: repeat(6, 1fr);	.weekday_title { grid-column: 1 / span 6; } }
-			&.wdith7	{ grid-template-columns: repeat(7, 1fr);	.weekday_title { grid-column: 1 / span 7; } }
-			&.wdith8	{ grid-template-columns: repeat(8, 1fr);	.weekday_title { grid-column: 1 / span 8; } }
-			&.wdith9	{ grid-template-columns: repeat(9, 1fr);	.weekday_title { grid-column: 1 / span 9; } }
-			&.wdith10	{ grid-template-columns: repeat(10, 1fr);	.weekday_title { grid-column: 1 / span 10;} }
+			&.width2	{ grid-template-columns: repeat(2, auto);	.weekday_title { grid-column: 1 / span 2; } }
+			&.width3	{ grid-template-columns: repeat(3, auto);	.weekday_title { grid-column: 1 / span 3; } }
+			&.width4	{ grid-template-columns: repeat(4, auto);	.weekday_title { grid-column: 1 / span 4; } }
+			&.width5	{ grid-template-columns: repeat(5, auto);	.weekday_title { grid-column: 1 / span 5; } }
+			&.width6	{ grid-template-columns: repeat(6, auto);	.weekday_title { grid-column: 1 / span 6; } }
+			&.wdith7	{ grid-template-columns: repeat(7, auto);	.weekday_title { grid-column: 1 / span 7; } }
+			&.wdith8	{ grid-template-columns: repeat(8, auto);	.weekday_title { grid-column: 1 / span 8; } }
+			&.wdith9	{ grid-template-columns: repeat(9, auto);	.weekday_title { grid-column: 1 / span 9; } }
+			&.wdith10	{ grid-template-columns: repeat(10, auto);	.weekday_title { grid-column: 1 / span 10;} }
 			@include set_dynamic(grid-gap, 0px 3px, 0px 5px, 0px 6px);
 	
 			&.hidden {
@@ -230,9 +251,15 @@
 
 				@include auto_pos;
 			}
-								
+
+			.room, .nocourse, .course {
+				@include set_dynamic_four_ranges(width, 400px, 600px, 750px, 60px, 70px, 91px, 113px);
+				// @include set_dynamic(width, null, 91px, 113px);
+			}
+
 			.room {
-				@include set_dynamic(min-width, null, 91px, 115px);
+				// @include set_dynamic(min-width, null, 91px, 115px);
+				// @include set_dynamic(width, null, 91px, 105px);
 				@include set_dynamic(height, 20px, 28px, 35px);
 				@include set_dynamic(margin-bottom, -4px, 8px, 10px);
 				
@@ -266,6 +293,8 @@
 			}
 			
 			.nocourse, .course {
+				// @include set_dynamic(min-width, 70px);
+				// @include set_dynamic(width, null, 91px, 105px);
 				@include set_dynamic(margin-top, 17px, 10px, 12px);
 				@include set_dynamic(height, 46px, 64px, 80px);
 				
@@ -273,7 +302,6 @@
 			}
 								
 			.course {
-
 				position: relative;
 
 				.course_hidden {
@@ -293,11 +321,13 @@
 
 				&.show_details:not(.hidden) {
 					.course_details {
-						@include auto_pos;
+						// @include auto_pos;
+						opacity: 1;
 					}
 				}
 
 				.course_data {
+					// @include set_desktop(width, inherit);
 					height: 100%;
 					cursor: pointer;
 
@@ -306,6 +336,7 @@
 					@include set_dynamic(font-size, 10px, 12px, 17px);
 					line-height: 115%;
 					text-align: center;
+					// white-space: nowrap;
 
 					@include auto_pos;
 
@@ -333,7 +364,7 @@
 					}
 
 					.beginners {
-						background: $colorGreen;
+						background: #018238;
 					}
 				}
 
@@ -341,120 +372,29 @@
 					width: 122%;
 					@include set_dynamic(height, 68px, 94px, 116px);
 					cursor: pointer;
+					border: black solid 1px;
 
-					background: $colorBlue;
+					background: inherit;
+					// background: $colorBlue;
 					color: black;
 					font-family: ubuntu_condensed;
 					@include set_dynamic(font-size, 10px, 12px, 17px);
 					line-height: 115%;
 					text-align: center;
-					white-space: nowrap;
+					// white-space: nowrap;
 
 					position: absolute;
 					z-index: 4;
-					left: -11%;
-					@include set_dynamic(top, -11px, -15px, -18px);
+					left: -12%;
+					@include set_dynamic(top, -12px, -16px, -19px);
 
-					@include auto_pos($invisible: true);
+					// @include auto_pos($invisible: true);
+					@include auto_pos;
+					opacity: 0;
+					-moz-transition: opacity .5s ease-in-out .1s;
+					-webkit-transition: opacity .5s ease-in-out .1s;
+					transition: opacity .5s ease-in-out .1s;
 				}
-			}
-		}
-	}
-}
-
-.timetable_prices {
-	@include set_dynamic(margin, 80px 0px 0px 0px, 33px 0px 0px 0px, 53px 0px 0px 0px);
-	background: none;
-
-	display: flex;
-	flex-flow: column nowrap;
-	justify-content: flex-start;
-	align-items: stretch;
-
-	.range1:not(.range_price) {
-		@include set_mobile(margin, 0px 19px, 0px);
-		width: 100%;
-
-		.ce_headline {
-			@include set_dynamic(padding, 0px 0px 22px 0px, 0px 0px 19px 0px, 0px 0px 53px 0px);
-
-			font-family: barnastencil;
-			@include set_dynamic(font-size, 22px, 22px, 36px);
-			font-weight: bold;
-			line-height: 115%;
-			text-transform: uppercase;
-		}
-	}
-
-	.range_price {
-		@include set_dynamic(margin, 0px -4px 0px 0px, 0px -3px 0px 0px, 0px -6px 0px 0px);
-
-		display: flex;
-		flex-flow: row wrap;
-		align-items: stretch;
-		align-content: flex-start;
-
-		.ce_text {
-			@include set_dynamic(flex, 1 0 35%, 1 0 23%, 1 0 18%);
-			@include set_dynamic(margin, 0px 4px 4px 0px, 0px 3px 3px 0px, 0px 6px 6px 0px);
-			@include set_dynamic(padding, 23px 6px, 21px 4px, 34px 6px);
-
-			background: $colorGrey2;
-			overflow: hidden;
-
-			@include auto_pos($v_align: flex-start);
-
-			h1, h2 {
-				@include set_dynamic(margin, 0px 0px 11px 0px, 0px 0px 9px 0px, 0px 0px 15px 0px);
-				@include set_dynamic(width, 70px, 64px, 106px);
-				@include set_dynamic(height, 70px, 64px, 106px);
-				@include set_dynamic(border-radius, 35px, 32px, 53px);
-
-				color: $colorGrey2;
-				background: white;
-				@include set_dynamic(font-size, 16px, 15px, 30px);
-				font-weight: 600;
-				text-align: center;
-				white-space: nowrap;
-
-				@include auto_pos;
-			}
-
-			p {
-				@include set_dynamic(margin, 3px 0px, 2px 0px, 5px 0px);
-
-				color: white;
-				@include set_dynamic(font-size, 16px, 15px, 22px);
-				font-weight: normal;
-				line-height: 135%;
-				text-align: center;
-			}
-		}
-	}
-
-	.range_price + .some_range {
-		@include set_dynamic(margin, 0px -4px 0px 0px, 0px -3px 0px 0px, 0px -6px 0px 0px);
-		@include set_mobile(flex-flow, column nowrap, row wrap);
-
-		display: flex;
-		align-items: stretch;
-
-		.ce_text {
-			@include set_mobile(flex, null, 1 0 35%);
-			@include set_dynamic(margin, 0px 4px 4px 0px, 0px 3px 3px 0px, 0px 6px 6px 0px);
-			@include set_dynamic(padding, 19px, 19px, 35px 50px);
-
-			background: $colorGrey2;
-
-			@include auto_pos($item_order: row, $h_align: flex-start, $v_align: flex-start);
-
-			p {
-				margin: 0px;
-
-				@include set_dynamic(font-size, 14px, 12px, 22px);
-				font-weight: normal;
-				line-height: 165%;
-				text-align: left;
 			}
 		}
 	}

@@ -49,7 +49,8 @@ class ModuleTimetable extends Module {
 		$data = TimetableModel::getCompleteTimetable();
 
 		$this->Template->timetable = $data['timetable'];
-        $this->Template->course_data = $data['courses'];
+		$this->Template->course_data = $data['courses'];
+		$this->Template->weekdays = $data['weekdays'];
         $this->Template->styles = $data['styles'];
 		$this->Template->lang = $data['lang'];
     }

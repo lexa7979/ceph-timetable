@@ -1,12 +1,12 @@
 
 <div class="<?= $this->class ?> block"<?= $this->cssID ?>>
 
-<div class="headline">Dein Kursplan</div>
+<!--<div class="headline">Dein Kursplan</div>-->
 
 <div class="filter">
 	<div class="filter_header">
 		<div class="text">Filter Kursplan</div>
-		<!--<div class="link">Kursplan als pdf&nbsp;&nbsp;<i class="fal fa-angle-right"></i></div>-->
+		<a class="link" href="">Kursplan als pdf&nbsp;&nbsp;<i class="fal fa-angle-right"></i></a>
 	</div>
 	<form id="timetable_filter" action="" onchange="timetable_applyFilter();">
 		<div class="filter_group audiences"><?php
@@ -17,16 +17,21 @@
 		<div class="filter_group styles"><?php
 							// Firstly insert style-filters of the following list, if present:
 							$styles_list = array(
-								'style_early_dance_training'
-													=> 'Tänz. Früherziehung',
-								'style_ballet'		=> 'Ballett',
-								'style_jazz'		=> 'Jazz',
-								'style_hiphop'		=> 'HipHop',
-								'style_contemporary'=> 'Contemporary',
-								'style_breakdance'	=> 'Breakdance',
-								'style_popping'		=> 'Popping'
+								'Tänz. Früherziehung'
+												=> 'style_early_dance_training',
+								'Tänzerische Früherz.'
+												=> 'style_early_dance_training',
+								'Tänzerische Früherziehung'
+												=> 'style_early_dance_training',
+								'Ballett'		=> 'style_ballet',
+								'Jazz'			=> 'style_jazz',
+								'HipHop'		=> 'style_hiphop',
+								'Hip-Hop'		=> 'style_hiphop',
+								'Contemporary'	=> 'style_contemporary',
+								'Breakdance'	=> 'style_breakdance',
+								'Popping'		=> 'style_popping'
 							);
-							foreach ($styles_list as $class => $filter):
+							foreach ($styles_list as $filter => $class):
 								$key = array_search($filter, $this->styles);
 								if ($key === FALSE)
 									continue;	?>	
@@ -34,15 +39,17 @@
 							endforeach;
 							// Insert any other style-filters, now:
 							foreach ($this->styles as $key => $value):
-								if ($value === 'hidden' || array_search($value, $styles_list) !== FALSE)
+								if ($value === 'hidden' || array_key_exists($value, $styles_list))
 									continue;	?>	
 			<label class="style_other"><input type="checkbox" name="styles" value="<?= $key ?>"/>&nbsp;&nbsp;<?= $value ?></label><?php
 							endforeach;	?>	
 		</div>
 		<div class="filter_group weekdays"><?php
-							for ($i = 0; $i < 6; $i++):	?>	
+							foreach ($this->weekdays as $i => $timerange):
+							//for ($i = 0; $i < 6; $i++):	?>	
 			<label><input type="checkbox" name="weekdays" value="<?= $i ?>"/>&nbsp;&nbsp;{{label::tl_timetable:weekdays_set:<?= $i ?>}}</label><?php
-							endfor;	?>	
+							endforeach;
+							// endfor;	?>	
 		</div>
 	</form>
 	<div class="filter_footer">
@@ -53,6 +60,9 @@
 
 <div class="data"><?php
 							foreach ($this->timetable as $weekday => $data):
+								// Skip empty weekdays:
+								if (! array_key_exists($weekday, $this->weekdays))
+									continue;
 								// $times_printed = false;
 								$col_count = 0;
 								foreach ($data as $data2)
@@ -84,6 +94,13 @@
 								foreach (array_keys(current(current($data))) as $hour):
 									$times_printed = false;
 									$first_building = true;
+									// Determine if the current line shall be marked as empty:
+									if ($hour < $this->weekdays[$weekday][0])
+										$empty_class = ' empty_early';
+									else if ($hour > $this->weekdays[$weekday][1])
+										$empty_class = ' empty_late';
+									else
+										$empty_class = '';
 									foreach ($data as $building => $data2):
 										$extra_space = ($first_building) ? '' : ' extraspace';
 										foreach ($data2 as $room => $data3):
@@ -101,11 +118,11 @@
 			<div class="hour"><?= sprintf($this->lang['format_frontend_time1'], $hour) ?></div><?php
 												endif;	?>	
 			<div class="course_hidden"></div>
-			<div class="course_data" onmouseenter="timetable_toggleDetails(<?= $c['array-key']; ?>, 'show');"><?= $icon ?><?= $c['style'] ?><br/><?= $c['description'] ?><br/><?= $c['ages'] ?><br/></div>
-			<div class="course_details" onmouseleave="timetable_toggleDetails(<?= $c['array-key']; ?>, 'hide');"><?= sprintf($this->lang['format_frontend_time2'], $c['start'][0], $c['start'][1], $c['end'][0], $c['end'][1]); ?><br/><?= $c['style'] ?><br/><?= $c['description'] ?><br/><?= $c['ages'] ?><br/><?= $c['teacher'] ?><br/></div>
+			<div class="course_data" onclick="timetable_toggleDetails(<?= $c['array-key']; ?>, 'click');" onmouseenter="timetable_toggleDetails(<?= $c['array-key']; ?>, 'show');" onmouseleave="timetable_toggleDetails(<?= $c['array-key']; ?>, 'hide');"><?= $icon ?><?= $c['style'] ?><br/><?= $c['description'] ?><br/><?= $c['ages'] ?><br/></div>
+			<div class="course_details" onclick="timetable_toggleDetails(<?= $c['array-key']; ?>, 'click');" onmouseenter="timetable_toggleDetails(<?= $c['array-key']; ?>, 'show');" onmouseleave="timetable_toggleDetails(<?= $c['array-key']; ?>, 'hide');"><?= sprintf($this->lang['format_frontend_time2'], $c['start'][0], $c['start'][1], $c['end'][0], $c['end'][1]); ?><br/><?= $c['style'] ?><br/><?= $c['description'] ?><br/><?= $c['ages'] ?><br/><?= $c['teacher'] ?><br/></div>
 		</div><?php
 											else:	?>	
-		<div class="nocourse<?= $extra_class ?><?= $extra_space ?>"><?= $extra_div ?></div><?php
+		<div class="nocourse<?= $extra_class ?><?= $extra_space ?><?= $empty_class ?>"><?= $extra_div ?></div><?php
 											endif;
 											$times_printed = true;
 											$extra_space = '';
