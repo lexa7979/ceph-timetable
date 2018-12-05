@@ -51,6 +51,19 @@ $GLOBALS['TL_DCA']['tl_timetable'] = [
 			'eval'			=> ['rgxp' => 'natural', 'tl_class' => 'w50'],
 			'sql'			=> "int(8) NOT NULL default '60'",
 		],
+		'placement'		=> [
+			'label'			=> &$GLOBALS['TL_LANG']['tl_timetable']['placement'],
+			'exclude'		=> true,
+			'search'		=> true,
+			// 'sorting'		=> true,
+			'flag'			=> 11,							// "Sort ascending"
+			'default'		=> 0,
+			'inputType'		=> 'select',
+			'options'		=> [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
+			'reference'		=> &$GLOBALS['TL_LANG']['tl_timetable']['placing_set'],
+			'eval'			=> ['tl_class' => 'w50'],
+			'sql'			=> "int(4) NOT NULL default '0'",
+		],
 		'room'		=> [
 			'label'			=> &$GLOBALS['TL_LANG']['tl_timetable']['room'],
 			'exclude'		=> true,
@@ -190,6 +203,6 @@ $GLOBALS['TL_DCA']['tl_timetable'] = [
 	// Structure of input form:
 	'palettes' 	=> [
 		'__selector__'		=> [],
-		'default'			=> '{time_place_legend},weekday,room,time,duration;{title_legend},audience,style,teacher,description,ages,is_fullybooked,is_forbeginners',
+		'default'			=> '{time_place_legend},weekday,room,time,duration,placement;{title_legend},audience,style,teacher,description,ages,is_fullybooked,is_forbeginners',
 	],
 ];
