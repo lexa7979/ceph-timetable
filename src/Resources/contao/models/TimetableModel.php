@@ -19,7 +19,7 @@ class TimetableModel extends Model {
 	public $reference_names = [];
 
 	/**
-	 * 
+	 *
 	 **/
 	public static function getCompleteTimetable() {
 
@@ -30,10 +30,19 @@ class TimetableModel extends Model {
 		$styles_data = $objDatabase->execute("SELECT s.id AS id, s.name AS name, s.filter_name AS filter_name FROM tl_timetable_styles s ORDER BY s.name")->fetchAllAssoc();
 		$styles_count = $objDatabase->execute("SELECT c.style AS style_id, COUNT(c.id) AS n_courses FROM tl_timetable c GROUP BY c.style")->fetchAllAssoc();
 
-		// Get the range of weekdays and range of times in which courses take place:
-		$range_data = $objDatabase->execute("SELECT MIN(time) AS t_min, MAX(time+duration*60) AS t_max FROM tl_timetable")->row();
-		$range_data['t_min'] = floor($range_data['t_min'] / 3600);
-		$range_data['t_max'] = floor($range_data['t_max'] / 3600);
+		// Get the range of times in which courses take place:
+		$range_data = $objDatabase->execute("SELECT COUNT(*) AS c, MIN(time+duration*30) AS t_min, MAX(time+duration*30) AS t_max FROM tl_timetable WHERE placement = 0")->row();
+		$range_placements = $objDatabase->execute("SELECT COUNT(*) AS c, MIN(placement) AS p_min, MAX(placement) AS p_max FROM tl_timetable WHERE placement > 0 AND placement < 24")->row();
+		$range_placements2 = $objDatabase->execute("SELECT COUNT(*) AS c FROM tl_timetable WHERE placement = 24")->row();
+		$range_data['t_min'] = min(
+			($range_data['c'] > 0) ? floor($range_data['t_min'] / 3600) : 25,
+			($range_placements['c'] > 0) ? $range_placements['p_min'] : 25,
+			($range_placements2['c'] > 0) ? 0 : 25
+		);
+		$range_data['t_max'] = max(
+			($range_data['c'] > 0) ? floor($range_data['t_max'] / 3600) : -1,
+			($range_placements['c'] > 0) ? $range_placements['p_max'] : -1
+		);
 
 		// Get the number of courses which take place in every room during the week:
 		$room_count_data = $objDatabase->execute("SELECT c.room AS room_id, COUNT(c.id) AS c FROM tl_timetable c JOIN tl_timetable_rooms r ON c.room = r.id GROUP BY c.room")->fetchAllAssoc();
@@ -96,10 +105,9 @@ class TimetableModel extends Model {
 					foreach ($courses_data as $k => $c) {
 						$start = floor($c['time'] / 60);
 						$end = $start + $c['duration'];
-						$mid = floor(($start + $end) / 2);
-						if (floor($mid / 60) == $ti && $c['weekday'] == $wd && $c['room'] == $r['room_id']) {
-						// if (floor($start / 60) == $ti && $c['weekday'] == $wd && $c['room'] == $r['room_id']) {
-						// 	$end = floor($c['time'] / 60) + $c['duration'];
+						$mid = floor($start + $c['duration'] / 2);
+						$hour = ($c['placement'] == 0) ? floor($mid / 60) : $c['placement'] % 24;
+						if ($hour == $ti && $c['weekday'] == $wd && $c['room'] == $r['room_id']) {
 							$timetable[$wd][$sn][$rn][$ti] = [
 								'array-key'			=> $k,
 								'start'				=> [floor($start / 60), $start % 60],
@@ -120,7 +128,8 @@ class TimetableModel extends Model {
 			}
 		}
 
-		// Determine for every weekday which lines of the 
+		// Determine for every weekday which lines of the course plan
+		// are empty at the beginning and at the end of the day:
 		$weekdays = [];
 		for ($wd = 0; $wd <= 5; $wd++) {
 			$ti_min = null;

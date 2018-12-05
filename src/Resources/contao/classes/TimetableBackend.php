@@ -17,26 +17,25 @@ class TimetableBackend extends Backend {
 		$end = $start + $arrRow['duration'];
 		// $hour = floor($start / 60);
 		$mid = floor(($start + $end) / 2);
-		$hour = floor($mid / 60);
+		$hour = ($arrRow['placement'] == 0) ? floor($mid / 60) : $arrRow['placement'] % 24;
 
 		$problems = array();
 
 		// Ensure that there is no collision with another course:
-		$data = $this->Database->prepare("SELECT c.time AS time, c.duration AS duration FROM tl_timetable c WHERE c.weekday=? AND c.room=? AND c.id<>?")
+		$data = $this->Database->prepare("SELECT c.time AS time, c.placement AS placement, c.duration AS duration FROM tl_timetable c WHERE c.weekday=? AND c.room=? AND c.id<>?")
 					->execute($arrRow['weekday'], $arrRow['room'], $arrRow['id']);
 		while ($row = $data->next()) {
 			$start2 = floor($row->time / 60);
 			$end2 = $start2 + $row->duration;
 			$mid2 = floor(($start2 + $end2) / 2);
+			$hour2 = ($row->placement == 0) ? floor($mid2 / 60) : $row->placement % 24;
 			if (($start2 > $start && $start2 < $end) || ($start2 == $start) || ($start2 < $start && $end2 > $start)) {
 				$problems[] = ['error', 'error_collision'];
-				if (floor($mid2 / 60) == $hour)
-				// if (floor($start2 / 60) == $hour)
+				if ($hour2 == $hour)
 					$problems[] = ['error', 'error_collision2'];
 				break;
 			}
-			if (floor($mid2 / 60) == $hour) {
-			// if (floor($start2 / 60) == $hour) {
+			if ($hour2 == $hour) {
 				$problems[] = ['error', 'error_collision2'];
 				break;
 			}
@@ -85,7 +84,7 @@ class TimetableBackend extends Backend {
 			7 => ($arrRow['ages'] == '') ? $GLOBALS['TL_LANG']['tl_timetable']['no_ages'][0] : $arrRow['ages'],
 			8 => $GLOBALS['TL_LANG']['tl_timetable']['is_forbeginners_switch'][($arrRow['is_forbeginners'] == 1) ? 1 : 0],
 			9 => $GLOBALS['TL_LANG']['tl_timetable']['is_fullybooked_switch'][($arrRow['is_fullybooked'] == 1) ? 1 : 0],
-			10 => sprintf($GLOBALS['TL_LANG']['tl_timetable']['format_frontend_time1'], floor($mid / 60)),
+			10 => sprintf($GLOBALS['TL_LANG']['tl_timetable']['format_frontend_time1'], $hour) . (($arrRow['placement'] == 0) ? '' : ', ' . $GLOBALS['TL_LANG']['tl_timetable']['format_frontend_manual']),
 			11 => sprintf($GLOBALS['TL_LANG']['tl_timetable']['format_frontend_time2'], floor($start / 60), $start % 60, floor($end / 60), $end % 60),
 		];
 		foreach ($s as $k => $v)
